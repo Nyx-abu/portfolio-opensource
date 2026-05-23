@@ -1,0 +1,27 @@
+import { cn } from "@/lib/cn";
+import type { ComponentPropsWithoutRef } from "react";
+
+type SectionProps = ComponentPropsWithoutRef<"section"> & {
+  spacing?: "compact" | "default" | "loose" | "vast";
+  id?: string;
+};
+
+const spacingMap = {
+  compact: "py-16 md:py-20",
+  default: "py-24 md:py-32",
+  loose: "py-32 md:py-48",
+  vast: "py-40 md:py-64",
+} as const;
+
+export function Section({
+  className,
+  spacing = "default",
+  children,
+  ...rest
+}: SectionProps) {
+  return (
+    <section className={cn("relative", spacingMap[spacing], className)} {...rest}>
+      {children}
+    </section>
+  );
+}

@@ -1,0 +1,25 @@
+node_modules
+.next
+out
+build
+dist
+.env
+.env.local
+.env.production
+.env.development
+*.log
+.DS_Store
+Thumbs.db
+.vercel
+.turbo
+coverage
+.cache
+public/uploads/*
+!public/uploads/.gitkeep
+prisma/dev.db*
+
+# Local-only / personal
+.claude/
+CV/
+fonts/
+tsconfig.tsbuildinfo

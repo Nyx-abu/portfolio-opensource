@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: var(--font-sans, "Inter", system-ui);
+    --font-display: var(--font-display, "DxPlayhigh", serif);
+    --font-script: var(--font-script, "Kiya Handwrite", cursive);
+    --font-mono: var(--font-mono, "JetBrains Mono", monospace);
+
+    --color-ink: 10 10 10;
+    --color-paper: 245 243 239;
+    --color-accent: 59 91 219;
+    --color-accent-muted: 47 73 175;
+
+    --ease-cinematic: cubic-bezier(0.7, 0, 0.2, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  * {
+    border-color: theme("colors.ink.700 / 30%");
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: auto;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-ink-950 text-paper font-sans;
+    background-color: rgb(var(--color-ink));
+    color: rgb(var(--color-paper));
+    text-wrap: pretty;
+  }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: rgb(var(--color-accent) / 0.6);
+    color: rgb(var(--color-paper));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-accent));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  .hairline {
+    @apply h-px w-full bg-ink-700/40;
+  }
+
+  .noise-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    opacity: 0.025;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+}
+
+@layer utilities {
+  .scrollbar-hidden::-webkit-scrollbar { display: none; }
+  .scrollbar-hidden { scrollbar-width: none; }
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
