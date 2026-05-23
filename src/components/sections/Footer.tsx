@@ -7,7 +7,7 @@ type FooterProps = {
   social?: { id: string; platform: string; url: string }[];
 };
 
-export function Footer({ name = "Portfolio", social = [] }: FooterProps) {
+export function Footer({ name = "Abdur Raheem", social = [] }: FooterProps) {
   return (
     <footer className="relative overflow-hidden border-t border-ink-700/40 bg-ink-950">
       <Container size="wide" className="py-16 md:py-24">
@@ -20,7 +20,7 @@ export function Footer({ name = "Portfolio", social = [] }: FooterProps) {
               {name}.
             </Link>
             <Text variant="body" className="mt-6 max-w-md text-paper/55">
-              Independent engineer & designer. Currently open to new collaborations starting Q3.
+              Full-stack engineer based in Chennai. Currently open to remote work and relocation.
             </Text>
           </div>
 

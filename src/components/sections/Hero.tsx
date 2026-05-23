@@ -30,13 +30,13 @@ export function Hero() {
             >
               <span className="h-px w-10 bg-paper/40" />
               <Text variant="label" className="text-paper/60">
-                Independent · 2024 — Present
+                Chennai · Open to remote
               </Text>
             </motion.div>
 
             <RevealText
               as="h1"
-              text="Building software with the patience of an editor"
+              text="Shipping full-stack products"
               className="text-display-xl font-display leading-[0.92] tracking-[-0.035em] text-paper"
               stagger={0.06}
               delay={0.15}
@@ -44,7 +44,7 @@ export function Hero() {
 
             <RevealText
               as="p"
-              text="and the precision of an engineer."
+              text="from first prompt to live traffic."
               className="mt-3 text-display-md font-display italic leading-[1] tracking-[-0.025em] text-paper/55"
               stagger={0.05}
               delay={0.55}
@@ -62,8 +62,9 @@ export function Hero() {
                 Currently
               </Text>
               <p className="mt-2 text-paper/85 font-light leading-relaxed">
-                Engineering & design lead working on interfaces, systems and tooling. Open for select
-                collaborations and full-time roles starting Q3.
+                Full-stack engineer working across AI-native interfaces, real-time systems and
+                production web apps. B.E. CSE, 2025. Recently shipped satellite mission-control UIs
+                at ShineUp.
               </p>
               <div className="mt-5 flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
@@ -71,7 +72,7 @@ export function Hero() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
                 </span>
                 <Text variant="label" className="text-emerald-300">
-                  Available for new work
+                  Open to new opportunities
                 </Text>
               </div>
             </div>

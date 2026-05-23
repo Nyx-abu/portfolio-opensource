@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
 
-export function Nav({ name = "Portfolio" }: { name?: string }) {
+export function Nav({ name = "Abdur Raheem" }: { name?: string }) {
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 100], [0, 0.85]);
   const blur = useTransform(scrollY, [0, 100], [0, 12]);

@@ -21,7 +21,9 @@ export default async function HomePage() {
     name: siteMeta.name,
     url: siteUrl,
     sameAs: social.map((s) => s.url),
-    jobTitle: "Engineer & Designer",
+    jobTitle: "Full-Stack Engineer",
+    email: siteMeta.email,
+    address: { "@type": "PostalAddress", addressLocality: "Chennai", addressCountry: "IN" },
   };
 
   return (
@@ -42,7 +44,7 @@ export default async function HomePage() {
         <Suspense fallback={<SectionSkeleton />}>
           <Experience />
         </Suspense>
-        <Contact social={social} />
+        <Contact email={siteMeta.email} social={social} />
       </main>
       <Footer social={social} />
     </SmoothScroll>
