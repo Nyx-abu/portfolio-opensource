@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { cn } from "@/lib/cn";
@@ -29,7 +28,6 @@ export type ProjectCardData = {
 export function ProjectCard({ project, span = "half" }: { project: ProjectCardData; span?: "half" | "full" | "third" }) {
   const reduced = useReducedMotion();
   const [hovered, setHovered] = useState(false);
-  const hero = project.images?.[0];
 
   const spanClass =
     span === "full"

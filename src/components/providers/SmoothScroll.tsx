@@ -56,7 +56,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
             attempts++;
             setTimeout(checkAndScroll, 100);
           }
-        } catch (e) {
+        } catch (_e) {
           // Ignore invalid selectors
         }
       };

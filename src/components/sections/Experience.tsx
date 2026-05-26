@@ -60,7 +60,7 @@ export async function Experience() {
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 items-baseline">
                           <div className="md:col-span-5 lg:col-span-4">
                             <Text variant="caption" className="font-mono text-[10px] tracking-[0.2em] text-paper/30 transition-colors duration-500 group-hover:text-accent-400/80 uppercase whitespace-nowrap">
-                              [{formatDate(e.startDate)} // {e.current ? "PRESENT" : formatDate(e.endDate)}]
+                              [{formatDate(e.startDate)} {"//"} {e.current ? "PRESENT" : formatDate(e.endDate)}]
                             </Text>
                           </div>
                           

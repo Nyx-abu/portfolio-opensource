@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { FadeIn } from "@/components/motion/FadeIn";
 
 export function PersonnelID() {
@@ -18,6 +17,7 @@ export function PersonnelID() {
 
           {/* Inner Image Container */}
           <div className="relative aspect-square overflow-hidden rounded-lg bg-ink-950">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/images/profile.png" 
               alt="Profile ID" 
