@@ -20,11 +20,11 @@ import {
   SiOpenai,
   SiGit,
   SiDocker,
-  SiAmazon,
   SiVercel,
   SiElectron,
   SiJsonwebtokens
 } from "react-icons/si";
+import { FiCloud } from "react-icons/fi";
 
 export const TechIconMap: Record<string, React.ElementType> = {
   "TypeScript": SiTypescript,
@@ -44,7 +44,7 @@ export const TechIconMap: Record<string, React.ElementType> = {
   "OpenAI": SiOpenai,
   "Git / GitHub Actions": SiGit,
   "Docker": SiDocker,
-  "AWS (EC2 / S3)": SiAmazon,
+  "AWS (EC2 / S3)": FiCloud,
   "Vercel": SiVercel,
   "Electron": SiElectron,
   "JWT / OAuth": SiJsonwebtokens,

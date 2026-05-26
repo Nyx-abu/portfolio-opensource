@@ -2,11 +2,12 @@ import { cn } from "@/lib/cn";
 import type { ComponentPropsWithoutRef } from "react";
 
 type SectionProps = ComponentPropsWithoutRef<"section"> & {
-  spacing?: "compact" | "default" | "loose" | "vast";
+  spacing?: "none" | "compact" | "default" | "loose" | "vast";
   id?: string;
 };
 
 const spacingMap = {
+  none: "",
   compact: "py-12 md:py-20",
   default: "py-16 md:py-32",
   loose: "py-20 md:py-48",

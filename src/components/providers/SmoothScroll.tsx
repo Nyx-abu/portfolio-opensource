@@ -49,7 +49,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       let attempts = 0;
       const checkAndScroll = () => {
         try {
-          const target = document.querySelector(hash);
+          const target = document.querySelector<HTMLElement>(hash);
           if (target) {
             lenisRef.current?.scrollTo(target, { immediate: true });
           } else if (attempts < 50) { // Try for up to 5 seconds
@@ -77,7 +77,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
         const url = new URL(target.href);
         if (url.pathname === window.location.pathname) {
           e.preventDefault();
-          const el = document.querySelector(url.hash);
+          const el = document.querySelector<HTMLElement>(url.hash);
           if (el) {
             lenisRef.current?.scrollTo(el);
             window.history.pushState(null, '', url.hash);
