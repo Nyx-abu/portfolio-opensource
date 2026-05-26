@@ -7,12 +7,15 @@ import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
 import { Tag } from "@/components/ui/Tag";
 import { Badge } from "@/components/ui/Badge";
+import { TechPill } from "@/components/ui/TechPill";
 import { RevealText } from "@/components/motion/RevealText";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { ProjectCard } from "@/components/sections/ProjectCard";
 import { Nav } from "@/components/sections/Nav";
 import { Footer } from "@/components/sections/Footer";
 import { MarkdownRenderer } from "@/components/ui/MarkdownRenderer";
+import { ParallaxImage } from "@/components/motion/ParallaxImage";
+import { FiGithub, FiExternalLink, FiFileText } from "react-icons/fi";
 import { prisma } from "@/lib/db";
 import { getProjectBySlug, getSocialLinks } from "@/lib/data";
 import { buildMetadata, siteUrl } from "@/lib/metadata";
@@ -94,8 +97,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main id="main" className="min-h-dvh pt-20 md:pt-32">
-        <Section spacing="compact">
+      <main id="main" className="relative min-h-dvh pt-24 md:pt-32 pb-20">
+        <div className="absolute inset-0 z-[-1] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent-500/10 via-ink-950 to-ink-950 pointer-events-none" />
+        
+        <Section spacing="none" className="mb-12">
           <Container size="wide">
             <FadeIn>
               <Link
@@ -116,7 +121,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <RevealText
                 as="h1"
                 text={project.title}
-                className="mt-6 text-display-2xl font-display leading-[0.9] tracking-[-0.04em] text-paper"
+                className="mt-6 text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-bold uppercase leading-[0.85] tracking-[-0.04em] text-paper"
                 stagger={0.06}
               />
               <FadeIn delay={0.2}>
@@ -128,13 +133,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Container>
         </Section>
 
-        <Section spacing="compact">
+        <Section spacing="none" className="mb-12">
           <Container size="wide">
-            <div className="grid grid-cols-12 gap-y-8 border-y border-ink-700/40 py-8 md:gap-x-12">
+            <div className="grid grid-cols-12 gap-y-8 border-t border-ink-700/40 pt-8 md:gap-x-12">
               <Meta label="Tech stack">
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5 mt-2">
                   {project.techStack.map((t) => (
-                    <Tag key={t}>{t}</Tag>
+                    <TechPill key={t} name={t} size="md" animate={true} />
                   ))}
                 </div>
               </Meta>
@@ -146,21 +151,55 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </div>
               </Meta>
               <Meta label="Links">
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-3">
                   {project.liveUrl && (
-                    <a className="underline-offset-4 hover:underline" href={project.liveUrl} target="_blank" rel="noreferrer">Live →</a>
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex items-center justify-between gap-4 rounded-xl border border-ink-700/40 bg-ink-900/20 p-3 transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10 hover:shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink-800/50 text-emerald-400 transition-colors group-hover:bg-emerald-500/20">
+                          <FiExternalLink className="h-4 w-4" />
+                        </div>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper/70 transition-colors group-hover:text-emerald-300">Live Project</span>
+                      </div>
+                      <span className="text-paper/20 transition-all group-hover:translate-x-1 group-hover:text-emerald-400/50">→</span>
+                    </a>
                   )}
                   {project.githubUrl && (
-                    <a className="underline-offset-4 hover:underline" href={project.githubUrl} target="_blank" rel="noreferrer">Source →</a>
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex items-center justify-between gap-4 rounded-xl border border-ink-700/40 bg-ink-900/20 p-3 transition-all hover:border-paper/30 hover:bg-white/5 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink-800/50 text-paper/70 transition-colors group-hover:bg-white/10 group-hover:text-white">
+                          <FiGithub className="h-4 w-4" />
+                        </div>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper/70 transition-colors group-hover:text-white">Source Code</span>
+                      </div>
+                      <span className="text-paper/20 transition-all group-hover:translate-x-1 group-hover:text-paper/50">→</span>
+                    </a>
                   )}
                   {project.documentationUrl && (
                     <a
                       href={project.documentationUrl.endsWith('.md') ? '#documentation' : project.documentationUrl}
                       target={project.documentationUrl.endsWith('.md') ? undefined : '_blank'}
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-accent-500/60 bg-accent-500/10 px-4 py-1.5 font-mono text-caption uppercase tracking-[0.14em] text-accent-200 transition-colors hover:bg-accent-500/20 hover:text-accent-100"
+                      className="group flex items-center justify-between gap-4 rounded-xl border border-ink-700/40 bg-ink-900/20 p-3 transition-all hover:border-accent-500/50 hover:bg-accent-500/10 hover:shadow-[0_0_15px_rgba(56,189,248,0.2)]"
                     >
-                      <span>📄</span> View Documentation
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink-800/50 text-accent-400 transition-colors group-hover:bg-accent-500/20">
+                          <FiFileText className="h-4 w-4" />
+                        </div>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper/70 transition-colors group-hover:text-accent-300">Documentation</span>
+                      </div>
+                      <span className="text-paper/20 transition-all group-hover:translate-x-1 group-hover:text-accent-400/50">
+                        {project.documentationUrl.endsWith('.md') ? '↓' : '→'}
+                      </span>
                     </a>
                   )}
                 </div>
@@ -171,25 +210,22 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* Hero image */}
         {project.images.length > 0 && (
-          <Section spacing="compact">
-            <Container size="wide">
-              <FadeIn>
-                <div className="w-full rounded-xl bg-ink-900/20 p-2 md:p-4 border border-ink-800/50 flex items-center justify-center">
-                  <img src={project.images[0]} alt={project.title} className="w-full h-auto max-h-[85vh] object-contain rounded-lg" />
-                </div>
-              </FadeIn>
-            </Container>
-          </Section>
+          <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mb-16 md:mb-24 mt-8">
+            <FadeIn>
+              <ParallaxImage src={project.images[0]} alt={project.title} />
+            </FadeIn>
+          </div>
         )}
 
         {/* Long description */}
         {project.longDescription && (
-          <Section spacing="default">
-            <Container size="narrow">
+          <Section spacing="none" className="mb-16 md:mb-24">
+            <Container size="default">
               <FadeIn>
-                <article className="prose-portfolio space-y-6 text-body-lg font-light leading-relaxed text-paper/80">
+                <article className="prose-portfolio max-w-none space-y-8 text-body-lg leading-loose text-paper/80 font-light border-l border-accent-500/30 pl-6 md:pl-10 relative">
+                  <div className="absolute left-[-1px] top-0 w-px h-full bg-gradient-to-b from-accent-500/80 via-accent-500/20 to-transparent shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
                   {project.longDescription.split("\n\n").map((para, i) => (
-                    <p key={i}>{para}</p>
+                    <p key={i} className="first-letter:text-6xl first-letter:font-display first-letter:text-accent-300 first-letter:mr-2 first-letter:float-left first-letter:leading-[0.8]">{para}</p>
                   ))}
                 </article>
               </FadeIn>
@@ -199,7 +235,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* Additional images gallery */}
         {project.images.length > 1 && (
-          <Section spacing="compact">
+          <Section spacing="none" className="mb-16 md:mb-24">
             <Container size="wide">
               <FadeIn>
                 <Text variant="label" className="text-paper/40 mb-6">Gallery</Text>
@@ -207,8 +243,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {project.images.slice(1).map((img, i) => (
                   <FadeIn key={img} delay={i * 0.05}>
-                    <div className="w-full rounded-xl bg-ink-900/20 p-2 md:p-4 border border-ink-800/50 h-full flex items-center justify-center">
-                      <img src={img} alt={`${project.title} image ${i + 2}`} className="w-full h-auto max-h-[70vh] object-contain rounded-lg" />
+                    <div className="group relative w-full overflow-hidden rounded-xl border border-ink-800/50 bg-ink-900/20 p-2 md:p-4 transition-all duration-500 hover:border-accent-500/40 hover:bg-ink-900/40">
+                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent-500/10 via-ink-900/0 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100 pointer-events-none" />
+                      <img src={img} alt={`${project.title} image ${i + 2}`} className="relative z-10 w-full h-auto max-h-[60vh] object-contain rounded-lg shadow-xl transition-transform duration-700 group-hover:scale-[1.03]" />
                     </div>
                   </FadeIn>
                 ))}
@@ -219,7 +256,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* Videos section */}
         {allVideos.length > 0 && (
-          <Section spacing="compact">
+          <Section spacing="none" className="mb-16 md:mb-24">
             <Container size="wide">
               <FadeIn>
                 <Text variant="label" className="text-paper/40 mb-6">Videos</Text>
@@ -227,7 +264,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <div className={`grid gap-6 ${allVideos.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
                 {allVideos.map((url, i) => (
                   <FadeIn key={url} delay={i * 0.05}>
-                    <div className="relative aspect-video overflow-hidden rounded-xl bg-ink-900">
+                    <div className="group relative aspect-video overflow-hidden rounded-xl border border-ink-800/50 bg-ink-900 transition-all hover:border-accent-500/40 hover:shadow-[0_0_30px_rgba(56,189,248,0.2)]">
                       <iframe
                         src={url}
                         className="absolute inset-0 h-full w-full"

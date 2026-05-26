@@ -7,6 +7,7 @@ import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { Text } from "@/components/ui/Text";
 import { Badge } from "@/components/ui/Badge";
+import { TechPill } from "@/components/ui/TechPill";
 import { duration, ease } from "@/lib/motion";
 import { track } from "@/lib/analytics";
 
@@ -110,12 +111,7 @@ export function ProjectCard({ project, span = "half" }: { project: ProjectCardDa
         {/* Tech Stack */}
         <div className="mt-8 flex flex-wrap gap-2">
           {project.techStack.slice(0, 4).map((t) => (
-            <span
-              key={t}
-              className="rounded-sm border border-ink-700/30 bg-ink-900/30 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-paper/50 transition-colors group-hover:border-ink-700/80 group-hover:text-paper/90"
-            >
-              {t}
-            </span>
+            <TechPill key={t} name={t} size="sm" animate={true} />
           ))}
         </div>
       </div>

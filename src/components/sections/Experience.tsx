@@ -2,9 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { MotionSpan } from "@/components/motion/MotionSpan";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
-import { FadeIn } from "@/components/motion/FadeIn";
-import { RevealText } from "@/components/motion/RevealText";
-import { getExperience, getSkills } from "@/lib/data";
+import { TechPill } from "@/components/ui/TechPill";
 
 const formatDate = (d?: Date | null) =>
   d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short" }) : "Present";
@@ -83,19 +81,18 @@ export async function Experience() {
                     <Text variant="label" className="text-paper/50">
                       {group.category}
                     </Text>
-                    <div className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-2">
+                    <div className="mt-4 flex flex-wrap items-baseline gap-3">
                       {group.items.map((s) => (
-                        <MotionSpan
+                        <motion.div
                           key={s.id}
                           initial={{ opacity: 0, y: 10 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true }}
                           transition={{ delay: idx * 0.05 }}
                           whileHover={{ scale: 1.05, y: -2 }}
-                          className="text-h3 font-display tracking-[-0.01em] text-paper/85 transition-colors hover:text-accent-300 inline-block cursor-default"
                         >
-                          {s.name}
-                        </MotionSpan>
+                          <TechPill name={s.name} size="lg" animate={true} />
+                        </motion.div>
                       ))}
                     </div>
                   </div>
