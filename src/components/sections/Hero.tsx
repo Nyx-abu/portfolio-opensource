@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { Container } from "@/components/ui/Container";
 import { Text } from "@/components/ui/Text";
 import { RevealText } from "@/components/motion/RevealText";
+import { HeroGraphic } from "@/components/motion/HeroGraphic";
 import { duration, ease } from "@/lib/motion";
 
 export function Hero() {
@@ -19,6 +20,7 @@ export function Hero() {
       ref={ref}
       className="relative flex min-h-dvh items-end overflow-hidden bg-ink-950 pb-20 pt-32 md:pb-28"
     >
+      <HeroGraphic />
       <Container size="wide" className="relative z-10">
         <motion.div style={{ opacity, y }} className="grid grid-cols-12 items-end gap-x-6 gap-y-12">
           <div className="col-span-12 md:col-span-8">
@@ -29,7 +31,7 @@ export function Hero() {
               className="mb-8 flex items-center gap-3"
             >
               <span className="h-px w-10 bg-paper/40" />
-              <Text variant="label" className="text-paper/60">
+              <Text variant="body-sm" className="font-mono uppercase tracking-[0.15em] text-paper/70">
                 Chennai · Open to remote
               </Text>
             </motion.div>
@@ -37,15 +39,15 @@ export function Hero() {
             <RevealText
               as="h1"
               text="Shipping full-stack products"
-              className="text-display-xl font-display leading-[0.92] tracking-[-0.035em] text-paper"
+              className="text-display-xl font-display leading-[0.88] tracking-[-0.04em] text-paper"
               stagger={0.06}
               delay={0.15}
             />
 
             <RevealText
               as="p"
-              text="from first prompt to live traffic."
-              className="mt-3 text-display-md font-display italic leading-[1] tracking-[-0.025em] text-paper/55"
+              text="from hello world to live traffic."
+              className="mt-4 text-2xl md:text-3xl font-sans font-light leading-tight tracking-tight text-paper/60"
               stagger={0.05}
               delay={0.55}
             />

@@ -4,6 +4,7 @@ import { sans, mono, display, script } from "@/lib/fonts";
 import { buildMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/cn";
 import { Analytics } from "@/components/providers/Analytics";
+import { CustomCursor } from "@/components/motion/CustomCursor";
 
 export const metadata: Metadata = buildMetadata();
 export const viewport: Viewport = {
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="min-h-dvh selection:bg-accent-500/60 selection:text-paper">
+        <CustomCursor />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-paper focus:px-3 focus:py-2 focus:text-ink-950"

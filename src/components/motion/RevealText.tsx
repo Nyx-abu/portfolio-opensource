@@ -40,7 +40,7 @@ export function RevealText({
       aria-label={text}
     >
       {tokens.map((tok, i) => (
-        <span key={i} className="inline-block overflow-hidden align-baseline" aria-hidden>
+        <span key={i} className="inline-block overflow-hidden align-baseline py-[0.2em] -my-[0.2em]" aria-hidden>
           <motion.span
             className="inline-block will-change-transform"
             variants={{

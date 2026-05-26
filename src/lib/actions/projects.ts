@@ -17,6 +17,8 @@ const projectSchema = z.object({
   liveUrl: z.string().url().optional().nullable().or(z.literal("")),
   githubUrl: z.string().url().optional().nullable().or(z.literal("")),
   videoUrl: z.string().url().optional().nullable().or(z.literal("")),
+  videoUrls: z.array(z.string()).default([]),
+  documentationUrl: z.string().optional().nullable().or(z.literal("")),
   status: z.nativeEnum(ProjectStatus).default(ProjectStatus.DRAFT),
   featured: z.boolean().default(false),
   timeline: z.string().optional().nullable(),
@@ -46,6 +48,7 @@ export async function createProject(raw: ProjectInput) {
       liveUrl: clean(data.liveUrl),
       githubUrl: clean(data.githubUrl),
       videoUrl: clean(data.videoUrl),
+      documentationUrl: clean(data.documentationUrl),
       longDescription: clean(data.longDescription),
       timeline: clean(data.timeline),
     },
@@ -59,7 +62,7 @@ export async function updateProject(id: string, raw: Partial<ProjectInput>) {
   const data = projectSchema.partial().parse(raw);
   const update: Record<string, unknown> = { ...data };
   if (data.slug) update.slug = slugify(data.slug);
-  for (const k of ["liveUrl", "githubUrl", "videoUrl", "longDescription", "timeline"] as const) {
+  for (const k of ["liveUrl", "githubUrl", "videoUrl", "documentationUrl", "longDescription", "timeline"] as const) {
     if (k in data) update[k] = clean(data[k] as string | null | undefined);
   }
   const project = await prisma.project.update({ where: { id }, data: update });

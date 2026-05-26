@@ -23,13 +23,13 @@ export function Contact({ email = "hello@example.com", social = [] }: ContactPro
           <RevealText
             as="h2"
             text="Have something worth"
-            className="text-display-xl font-display leading-[0.92] tracking-[-0.035em] text-paper"
+            className="text-display-2xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
             stagger={0.05}
           />
           <RevealText
             as="h2"
             text="building together?"
-            className="text-display-xl font-display italic leading-[0.92] tracking-[-0.035em] text-paper/55"
+            className="text-display-2xl font-display leading-[0.85] tracking-[-0.02em] text-paper/55"
             stagger={0.05}
             delay={0.25}
           />
@@ -41,7 +41,7 @@ export function Contact({ email = "hello@example.com", social = [] }: ContactPro
               <a
                 href={`mailto:${email}`}
                 onClick={() => track({ type: "contact_click" })}
-                className="group inline-flex items-baseline gap-3 font-display text-display-md tracking-[-0.025em] text-paper transition-colors hover:text-accent-300"
+                className="group inline-flex items-baseline gap-3 font-display text-h3 md:text-display-sm tracking-tight text-paper transition-all hover:bg-gradient-to-r hover:from-accent-400 hover:to-emerald-400 hover:bg-clip-text hover:text-transparent"
               >
                 <span className="border-b border-ink-700/60 pb-1 transition-colors group-hover:border-accent-400">
                   {email}
@@ -67,17 +67,19 @@ export function Contact({ email = "hello@example.com", social = [] }: ContactPro
                       href={s.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="group inline-flex items-center gap-2 font-sans text-body text-paper/80 transition-colors hover:text-paper"
+                      className="group flex items-center justify-between gap-4 rounded-xl border border-transparent p-4 font-sans text-body text-paper/40 transition-all hover:border-ink-700/50 hover:bg-ink-900/40 hover:text-paper"
                     >
-                      <span className="font-mono text-caption uppercase tracking-[0.14em] text-paper/40">
-                        {String(s.platform).slice(0, 2)}
-                      </span>
-                      <span>{s.platform}</span>
+                      <div className="flex items-center gap-4">
+                        <span className="font-mono text-caption uppercase tracking-[0.14em] text-paper/20 group-hover:text-paper/40 transition-colors">
+                          {String(s.platform).slice(0, 2)}
+                        </span>
+                        <span>{s.platform}</span>
+                      </div>
                       <span
                         aria-hidden
-                        className="opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100"
+                        className="opacity-0 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:opacity-100"
                       >
-                        →
+                        ↗
                       </span>
                     </a>
                   </li>

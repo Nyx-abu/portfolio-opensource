@@ -90,11 +90,6 @@ export function ProjectCard({ project, span = "half" }: { project: ProjectCardDa
 
           <div className="absolute left-5 top-5 flex items-center gap-2">
             {project.featured && <Badge tone="featured">Featured</Badge>}
-            {project.timeline && (
-              <Badge tone="neutral" className="bg-ink-950/60 backdrop-blur">
-                {project.timeline}
-              </Badge>
-            )}
           </div>
 
           <motion.div

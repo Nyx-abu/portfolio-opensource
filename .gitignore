@@ -21,6 +21,6 @@ prisma/dev.db*
 # Local-only / personal
 .claude/
 CV/
-fonts/
+/fonts/
 tsconfig.tsbuildinfo
 HANDOVER.md

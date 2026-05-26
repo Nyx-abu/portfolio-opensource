@@ -6,6 +6,7 @@ import { About } from "@/components/sections/About";
 import { Projects } from "@/components/sections/Projects";
 import { Experience } from "@/components/sections/Experience";
 import { Contact } from "@/components/sections/Contact";
+import { FadeIn } from "@/components/motion/FadeIn";
 import { Footer } from "@/components/sections/Footer";
 import { getSocialLinks } from "@/lib/data";
 import { siteMeta, siteUrl } from "@/lib/metadata";
@@ -35,15 +36,19 @@ export default async function HomePage() {
       <Nav />
       <main id="main">
         <Hero />
+        <FadeIn><div className="hairline max-w-7xl mx-auto" /></FadeIn>
         <Suspense fallback={<SectionSkeleton />}>
           <About />
         </Suspense>
+        <FadeIn><div className="hairline max-w-7xl mx-auto" /></FadeIn>
         <Suspense fallback={<SectionSkeleton />}>
           <Projects />
         </Suspense>
+        <FadeIn><div className="hairline max-w-7xl mx-auto" /></FadeIn>
         <Suspense fallback={<SectionSkeleton />}>
           <Experience />
         </Suspense>
+        <FadeIn><div className="hairline max-w-7xl mx-auto" /></FadeIn>
         <Contact email={siteMeta.email} social={social} />
       </main>
       <Footer social={social} />

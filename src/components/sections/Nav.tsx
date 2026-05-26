@@ -34,7 +34,7 @@ export function Nav({ name = "Abdur Raheem" }: { name?: string }) {
           <nav className="flex items-center gap-6 md:gap-10">
             {[
               { href: "/#about", label: "About" },
-              { href: "/projects", label: "Work" },
+              { href: "/projects", label: "Projects" },
               { href: "/#experience", label: "Experience" },
               { href: "/#contact", label: "Contact" },
             ].map((item) => (

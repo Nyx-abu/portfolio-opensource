@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteProject, toggleFeatured } from "@/lib/actions/projects";
 
-function FeaturedToggle({ id, featured }: { id: string; featured: boolean }) {
+export function FeaturedToggle({ id, featured }: { id: string; featured: boolean }) {
   const [optimistic, setOptimistic] = useState(featured);
   const [, start] = useTransition();
   return (
@@ -35,7 +35,7 @@ function FeaturedToggle({ id, featured }: { id: string; featured: boolean }) {
   );
 }
 
-function Delete({ id, title }: { id: string; title: string }) {
+export function DeleteButton({ id, title }: { id: string; title: string }) {
   const router = useRouter();
   const [pending, start] = useTransition();
   return (
@@ -56,4 +56,3 @@ function Delete({ id, title }: { id: string; title: string }) {
   );
 }
 
-export const ProjectRowActions = { FeaturedToggle, Delete };

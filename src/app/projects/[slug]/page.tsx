@@ -12,6 +12,7 @@ import { FadeIn } from "@/components/motion/FadeIn";
 import { ProjectCard } from "@/components/sections/ProjectCard";
 import { Nav } from "@/components/sections/Nav";
 import { Footer } from "@/components/sections/Footer";
+import { MarkdownRenderer } from "@/components/ui/MarkdownRenderer";
 import { prisma } from "@/lib/db";
 import { getProjectBySlug, getSocialLinks } from "@/lib/data";
 import { buildMetadata, siteUrl } from "@/lib/metadata";
@@ -71,6 +72,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     keywords: [...project.tags, ...project.techStack].join(", "),
   };
 
+  // Collect all video URLs (legacy + new)
+  const allVideos: string[] = [
+    ...(project.videoUrl ? [project.videoUrl] : []),
+    ...(project.videoUrls ?? []),
+  ].filter(Boolean);
+
+  // If doc is .md, fetch the raw content for server-side rendering
+  let markdownContent: string | null = null;
+  if (project.documentationUrl?.endsWith('.md')) {
+    try {
+      const res = await fetch(project.documentationUrl, { next: { revalidate: 300 } });
+      if (res.ok) markdownContent = await res.text();
+    } catch {}
+  }
+
   return (
     <>
       <Nav />
@@ -125,32 +141,26 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <Meta label="Tags">
                 <div className="flex flex-wrap gap-1.5">
                   {project.tags.map((t) => (
-                    <Tag key={t} tone="muted">
-                      {t}
-                    </Tag>
+                    <Tag key={t} tone="muted">{t}</Tag>
                   ))}
                 </div>
               </Meta>
               <Meta label="Links">
                 <div className="flex flex-col gap-1.5">
                   {project.liveUrl && (
-                    <a
-                      className="underline-offset-4 hover:underline"
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Live →
-                    </a>
+                    <a className="underline-offset-4 hover:underline" href={project.liveUrl} target="_blank" rel="noreferrer">Live →</a>
                   )}
                   {project.githubUrl && (
+                    <a className="underline-offset-4 hover:underline" href={project.githubUrl} target="_blank" rel="noreferrer">Source →</a>
+                  )}
+                  {project.documentationUrl && (
                     <a
-                      className="underline-offset-4 hover:underline"
-                      href={project.githubUrl}
-                      target="_blank"
+                      href={project.documentationUrl.endsWith('.md') ? '#documentation' : project.documentationUrl}
+                      target={project.documentationUrl.endsWith('.md') ? undefined : '_blank'}
                       rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-accent-500/60 bg-accent-500/10 px-4 py-1.5 font-mono text-caption uppercase tracking-[0.14em] text-accent-200 transition-colors hover:bg-accent-500/20 hover:text-accent-100"
                     >
-                      Source →
+                      <span>📄</span> View Documentation
                     </a>
                   )}
                 </div>
@@ -159,25 +169,20 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Container>
         </Section>
 
+        {/* Hero image */}
         {project.images.length > 0 && (
           <Section spacing="compact">
             <Container size="wide">
               <FadeIn>
                 <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl">
-                  <Image
-                    src={project.images[0]}
-                    alt={project.title}
-                    fill
-                    priority
-                    sizes="100vw"
-                    className="object-cover"
-                  />
+                  <Image src={project.images[0]} alt={project.title} fill priority sizes="100vw" className="object-cover" />
                 </div>
               </FadeIn>
             </Container>
           </Section>
         )}
 
+        {/* Long description */}
         {project.longDescription && (
           <Section spacing="default">
             <Container size="narrow">
@@ -192,19 +197,42 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Section>
         )}
 
+        {/* Additional images gallery */}
         {project.images.length > 1 && (
           <Section spacing="compact">
             <Container size="wide">
+              <FadeIn>
+                <Text variant="label" className="text-paper/40 mb-6">Gallery</Text>
+              </FadeIn>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {project.images.slice(1).map((img, i) => (
                   <FadeIn key={img} delay={i * 0.05}>
                     <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-                      <Image
-                        src={img}
-                        alt={`${project.title} image ${i + 2}`}
-                        fill
-                        sizes="(min-width: 768px) 50vw, 100vw"
-                        className="object-cover"
+                      <Image src={img} alt={`${project.title} image ${i + 2}`} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </Container>
+          </Section>
+        )}
+
+        {/* Videos section */}
+        {allVideos.length > 0 && (
+          <Section spacing="compact">
+            <Container size="wide">
+              <FadeIn>
+                <Text variant="label" className="text-paper/40 mb-6">Videos</Text>
+              </FadeIn>
+              <div className={`grid gap-6 ${allVideos.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+                {allVideos.map((url, i) => (
+                  <FadeIn key={url} delay={i * 0.05}>
+                    <div className="relative aspect-video overflow-hidden rounded-xl bg-ink-900">
+                      <iframe
+                        src={url}
+                        className="absolute inset-0 h-full w-full"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
                       />
                     </div>
                   </FadeIn>
@@ -214,47 +242,32 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Section>
         )}
 
-        {project.videoUrl && (
-          <Section spacing="compact">
-            <Container size="wide">
-              <div className="relative aspect-video overflow-hidden rounded-xl bg-ink-900">
-                <iframe
-                  src={project.videoUrl}
-                  className="absolute inset-0 h-full w-full"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+        {/* Documentation section (rendered markdown) */}
+        {markdownContent && (
+          <Section spacing="default" id="documentation">
+            <Container size="narrow">
+              <FadeIn>
+                <Text variant="label" className="text-paper/40 mb-8">Documentation</Text>
+                <MarkdownRenderer content={markdownContent} />
+              </FadeIn>
             </Container>
           </Section>
         )}
 
+        {/* Related projects */}
         {related.length > 0 && (
           <Section spacing="default" className="border-t border-ink-700/40">
             <Container size="wide">
-              <Text variant="caption" className="text-paper/40">
-                Continue
-              </Text>
-              <RevealText
-                as="h2"
-                text="More projects"
-                className="mt-4 text-display-md font-display leading-[1] tracking-[-0.025em] text-paper"
-              />
+              <Text variant="caption" className="text-paper/40">Continue</Text>
+              <RevealText as="h2" text="More projects" className="mt-4 text-display-md font-display leading-[1] tracking-[-0.025em] text-paper" />
               <div className="mt-12 grid grid-cols-12 gap-8">
                 {related.map((p, i) => (
                   <ProjectCard
                     key={p.id}
                     project={{
-                      id: p.id,
-                      slug: p.slug,
-                      title: p.title,
-                      description: p.description,
-                      tags: p.tags,
-                      techStack: p.techStack,
-                      images: p.images,
-                      featured: p.featured,
-                      timeline: p.timeline,
-                      index: i,
+                      id: p.id, slug: p.slug, title: p.title, description: p.description,
+                      tags: p.tags, techStack: p.techStack, images: p.images,
+                      featured: p.featured, timeline: p.timeline, index: i,
                     }}
                   />
                 ))}
@@ -271,9 +284,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 function Meta({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="col-span-12 md:col-span-4">
-      <Text variant="label" className="text-paper/40">
-        {label}
-      </Text>
+      <Text variant="label" className="text-paper/40">{label}</Text>
       <div className="mt-3 text-body text-paper/85">{children}</div>
     </div>
   );

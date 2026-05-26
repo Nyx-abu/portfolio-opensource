@@ -28,6 +28,8 @@ export default async function EditProjectPage({
         liveUrl: project.liveUrl ?? "",
         githubUrl: project.githubUrl ?? "",
         videoUrl: project.videoUrl ?? "",
+        videoUrls: project.videoUrls ?? [],
+        documentationUrl: project.documentationUrl ?? "",
         timeline: project.timeline ?? "",
         status: project.status,
         featured: project.featured,

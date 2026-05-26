@@ -23,7 +23,7 @@ export async function About() {
             <RevealText
               as="h2"
               text={about.headline}
-              className="text-display-md font-display leading-[1] tracking-[-0.025em] text-paper"
+              className="text-display-sm md:text-display-md font-sans font-light leading-[1.15] tracking-tight text-paper"
               stagger={0.04}
             />
 

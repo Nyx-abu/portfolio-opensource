@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 const config: Config = {
   content: ["./src/**/*.{ts,tsx,mdx}"],
@@ -56,16 +57,15 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       fontSize: {
-        // DxPlayhigh has a narrow optical size — bump scale ~30–40% vs a standard sans
-        "display-2xl": ["clamp(5.5rem, 14vw, 14rem)", { lineHeight: "0.88", letterSpacing: "-0.04em", fontWeight: "500" }],
-        "display-xl": ["clamp(4.25rem, 11vw, 10rem)", { lineHeight: "0.9", letterSpacing: "-0.035em", fontWeight: "500" }],
-        "display-lg": ["clamp(3.5rem, 8vw, 7rem)", { lineHeight: "0.94", letterSpacing: "-0.03em", fontWeight: "500" }],
-        "display-md": ["clamp(2.75rem, 5.5vw, 4.75rem)", { lineHeight: "0.98", letterSpacing: "-0.025em", fontWeight: "500" }],
-        "display-sm": ["clamp(2.25rem, 4vw, 3.5rem)", { lineHeight: "1.02", letterSpacing: "-0.02em", fontWeight: "500" }],
-        "h1": ["clamp(2.625rem, 5vw, 3.75rem)", { lineHeight: "1.02", letterSpacing: "-0.02em", fontWeight: "500" }],
-        "h2": ["clamp(2.125rem, 4vw, 3rem)", { lineHeight: "1.08", letterSpacing: "-0.015em", fontWeight: "500" }],
-        "h3": ["clamp(1.625rem, 2.75vw, 2.125rem)", { lineHeight: "1.18", letterSpacing: "-0.01em", fontWeight: "500" }],
-        "h4": ["clamp(1.375rem, 2vw, 1.625rem)", { lineHeight: "1.28", fontWeight: "500" }],
+        "display-2xl": ["clamp(4.5rem, 10vw, 9rem)", { lineHeight: "0.9", letterSpacing: "-0.04em", fontWeight: "700" }],
+        "display-xl": ["clamp(3.5rem, 8vw, 7rem)", { lineHeight: "0.95", letterSpacing: "-0.03em", fontWeight: "700" }],
+        "display-lg": ["clamp(2.75rem, 6vw, 5rem)", { lineHeight: "1", letterSpacing: "-0.025em", fontWeight: "700" }],
+        "display-md": ["clamp(2.25rem, 4.5vw, 4rem)", { lineHeight: "1.05", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "display-sm": ["clamp(1.875rem, 3.5vw, 3rem)", { lineHeight: "1.1", letterSpacing: "-0.015em", fontWeight: "600" }],
+        "h1": ["clamp(2.625rem, 5vw, 3.75rem)", { lineHeight: "1.02", letterSpacing: "-0.03em", fontWeight: "600" }],
+        "h2": ["clamp(2.125rem, 4vw, 3rem)", { lineHeight: "1.08", letterSpacing: "-0.02em", fontWeight: "600" }],
+        "h3": ["clamp(1.625rem, 2.75vw, 2.125rem)", { lineHeight: "1.18", letterSpacing: "-0.01em", fontWeight: "600" }],
+        "h4": ["clamp(1.375rem, 2vw, 1.625rem)", { lineHeight: "1.28", fontWeight: "600" }],
         "body-lg": ["1.125rem", { lineHeight: "1.6" }],
         "body": ["1rem", { lineHeight: "1.65" }],
         "body-sm": ["0.875rem", { lineHeight: "1.6" }],
@@ -100,7 +100,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
 
 export default config;

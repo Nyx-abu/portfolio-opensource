@@ -29,12 +29,12 @@ export async function Projects() {
         <div className="flex items-end justify-between gap-6">
           <div>
             <Text variant="caption" className="text-paper/40">
-              02 — Selected Work
+              02 — Selected Projects
             </Text>
             <RevealText
               as="h2"
               text="Things I've made"
-              className="mt-4 text-display-lg font-display leading-[0.95] tracking-[-0.03em] text-paper"
+              className="mt-4 text-display-xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
               stagger={0.05}
             />
           </div>

@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import { MotionSpan } from "@/components/motion/MotionSpan";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
 import { FadeIn } from "@/components/motion/FadeIn";
@@ -22,7 +23,7 @@ export async function Experience() {
             <RevealText
               as="h2"
               text="A few stops"
-              className="mt-4 text-display-md font-display leading-[1] tracking-[-0.025em] text-paper"
+              className="mt-4 text-display-xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
             />
             <FadeIn delay={0.2}>
               <p className="mt-6 max-w-sm text-body font-light text-paper/60">
@@ -45,19 +46,14 @@ export async function Experience() {
               <ul className="divide-y divide-ink-700/40">
                 {exp.map((e, i) => (
                   <FadeIn key={e.id} as="li" delay={i * 0.05}>
-                    <div className="group grid grid-cols-12 items-baseline gap-4 py-6 transition-colors">
+                    <div className="group grid grid-cols-12 items-baseline gap-4 p-6 -mx-6 rounded-2xl border border-transparent transition-all duration-500 hover:bg-ink-900/40 hover:backdrop-blur-sm hover:border-ink-800/50">
                       <Text variant="caption" className="col-span-12 text-paper/40 md:col-span-3">
                         {formatDate(e.startDate)} — {e.current ? "Present" : formatDate(e.endDate)}
                       </Text>
                       <div className="col-span-12 md:col-span-9">
-                        <Text variant="h3" className="text-paper">
+                        <Text variant="h3" className="text-paper transition-colors group-hover:text-accent-300">
                           {e.role} <span className="text-paper/50">· {e.company}</span>
                         </Text>
-                        {e.description && (
-                          <Text variant="body" className="mt-1.5 text-paper/55">
-                            {e.description}
-                          </Text>
-                        )}
                       </div>
                     </div>
                   </FadeIn>
@@ -75,7 +71,7 @@ export async function Experience() {
             <RevealText
               as="h3"
               text="Stack"
-              className="mt-4 text-display-sm font-display tracking-[-0.02em] text-paper"
+              className="mt-4 text-display-lg font-display leading-[0.85] tracking-[-0.02em] text-paper"
             />
           </div>
 
@@ -89,12 +85,17 @@ export async function Experience() {
                     </Text>
                     <div className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-2">
                       {group.items.map((s) => (
-                        <span
+                        <MotionSpan
                           key={s.id}
-                          className="text-h3 font-display tracking-[-0.01em] text-paper/85 transition-colors hover:text-paper"
+                          initial={{ opacity: 0, y: 10 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: idx * 0.05 }}
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          className="text-h3 font-display tracking-[-0.01em] text-paper/85 transition-colors hover:text-accent-300 inline-block cursor-default"
                         >
                           {s.name}
-                        </span>
+                        </MotionSpan>
                       ))}
                     </div>
                   </div>

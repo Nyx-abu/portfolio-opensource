@@ -21,6 +21,8 @@ type State = {
   liveUrl: string;
   githubUrl: string;
   videoUrl: string;
+  videoUrls: string[];
+  documentationUrl: string;
   timeline: string;
   status: ProjectStatus;
   featured: boolean;
@@ -38,6 +40,8 @@ const empty: State = {
   liveUrl: "",
   githubUrl: "",
   videoUrl: "",
+  videoUrls: [],
+  documentationUrl: "",
   timeline: "",
   status: ProjectStatus.DRAFT,
   featured: false,
@@ -169,7 +173,7 @@ export function ProjectEditor({
 
           <Card className="p-6">
             <Text variant="label" className="text-paper/50">
-              Media
+              Images
             </Text>
             <div className="mt-4">
               <ImagesEditor
@@ -177,19 +181,47 @@ export function ProjectEditor({
                 onChange={(images) => setState({ ...state, images })}
               />
             </div>
-            <div className="mt-6">
-              <FieldShell label="Video URL (YouTube / Vimeo embed)">
+          </Card>
+
+          <Card className="p-6">
+            <Text variant="label" className="text-paper/50">
+              Videos
+            </Text>
+            <div className="mt-4 space-y-4">
+              <FieldShell label="Legacy embed URL (YouTube / Vimeo)">
                 <Input
                   value={state.videoUrl}
                   placeholder="https://www.youtube.com/embed/…"
                   onChange={(e) => setState({ ...state, videoUrl: e.target.value })}
                 />
               </FieldShell>
-              {state.videoUrl && (
-                <div className="mt-3 aspect-video w-full overflow-hidden rounded-lg bg-ink-900">
-                  <iframe src={state.videoUrl} className="h-full w-full" />
+              <FieldShell label="Additional video URLs" hint="Add video embed URLs one at a time">
+                <VideoUrlsEditor
+                  urls={state.videoUrls}
+                  onChange={(videoUrls) => setState({ ...state, videoUrls })}
+                />
+              </FieldShell>
+              {[state.videoUrl, ...state.videoUrls].filter(Boolean).length > 0 && (
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  {[state.videoUrl, ...state.videoUrls].filter(Boolean).map((url) => (
+                    <div key={url} className="aspect-video w-full overflow-hidden rounded-lg bg-ink-900">
+                      <iframe src={url} className="h-full w-full" />
+                    </div>
+                  ))}
                 </div>
               )}
+            </div>
+          </Card>
+
+          <Card className="p-6">
+            <Text variant="label" className="text-paper/50">
+              Documentation
+            </Text>
+            <div className="mt-4">
+              <DocumentationUploader
+                url={state.documentationUrl}
+                onChange={(documentationUrl) => setState({ ...state, documentationUrl })}
+              />
             </div>
           </Card>
         </div>
@@ -292,6 +324,8 @@ function toPayload(s: State) {
     liveUrl: s.liveUrl || null,
     githubUrl: s.githubUrl || null,
     videoUrl: s.videoUrl || null,
+    videoUrls: s.videoUrls,
+    documentationUrl: s.documentationUrl || null,
     timeline: s.timeline || null,
     status: s.status,
     featured: s.featured,
@@ -386,6 +420,130 @@ function ImagesEditor({
               </div>
             </div>
           ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function VideoUrlsEditor({
+  urls,
+  onChange,
+}: {
+  urls: string[];
+  onChange: (next: string[]) => void;
+}) {
+  const [draft, setDraft] = useState("");
+
+  const add = () => {
+    const trimmed = draft.trim();
+    if (!trimmed) return;
+    onChange([...urls, trimmed]);
+    setDraft("");
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), add())}
+          placeholder="https://www.youtube.com/embed/…"
+          className="flex-1 rounded-lg border border-ink-700/60 bg-ink-900 px-3 py-2 text-body-sm text-paper placeholder:text-paper/30 focus:border-paper/40 focus:outline-none"
+        />
+        <button
+          type="button"
+          onClick={add}
+          className="rounded-lg border border-ink-700/60 px-3 py-2 font-mono text-caption uppercase tracking-[0.12em] text-paper/60 hover:bg-ink-800/60 hover:text-paper"
+        >
+          + Add
+        </button>
+      </div>
+      {urls.length > 0 && (
+        <div className="space-y-1">
+          {urls.map((url, i) => (
+            <div key={`${url}-${i}`} className="flex items-center gap-2 rounded-md bg-ink-900/60 px-3 py-1.5 text-body-sm">
+              <span className="flex-1 truncate text-paper/60">{url}</span>
+              <button
+                type="button"
+                onClick={() => onChange(urls.filter((_, j) => j !== i))}
+                className="text-rose-300/80 hover:text-rose-300 text-caption"
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function DocumentationUploader({
+  url,
+  onChange,
+}: {
+  url: string;
+  onChange: (next: string) => void;
+}) {
+  const [uploading, setUploading] = useState(false);
+
+  const upload = async (file: File) => {
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+      const data = (await res.json()) as { url?: string };
+      if (data.url) onChange(data.url);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-3">
+      <label
+        className="flex h-24 cursor-pointer items-center justify-center rounded-lg border border-dashed border-ink-700/60 text-paper/50 hover:border-paper/40 hover:text-paper"
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={async (e) => {
+          e.preventDefault();
+          const f = e.dataTransfer.files?.[0];
+          if (f) await upload(f);
+        }}
+      >
+        <input
+          type="file"
+          accept=".md,.pdf,.doc,.docx,text/markdown,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          className="hidden"
+          onChange={async (e) => {
+            const f = e.target.files?.[0];
+            if (f) await upload(f);
+          }}
+        />
+        {uploading ? "Uploading…" : "Drop .md, .pdf, or .docx — or click to upload"}
+      </label>
+
+      {url && (
+        <div className="flex items-center gap-3 rounded-md bg-ink-900/60 px-3 py-2">
+          <span className="text-body-sm text-paper/60 truncate flex-1">{url}</span>
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            className="font-mono text-caption uppercase tracking-[0.12em] text-accent-300 hover:text-accent-200"
+          >
+            Preview
+          </a>
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            className="text-rose-300/80 hover:text-rose-300 text-caption"
+          >
+            ✕
+          </button>
         </div>
       )}
     </div>

@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Text } from "@/components/ui/Text";
 import { Badge } from "@/components/ui/Badge";
 import { prisma } from "@/lib/db";
-import { ProjectRowActions } from "@/components/admin/ProjectRowActions";
+import { FeaturedToggle, DeleteButton } from "@/components/admin/ProjectRowActions";
+import { GitHubImporter } from "@/components/admin/GitHubImporter";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +33,8 @@ export default async function AdminProjectsPage() {
           + New
         </Link>
       </header>
+
+      <GitHubImporter />
 
       <div className="overflow-hidden rounded-xl border border-ink-700/40">
         <table className="w-full text-left text-body-sm">
@@ -72,14 +75,14 @@ export default async function AdminProjectsPage() {
                     )}
                   </td>
                   <td>
-                    <ProjectRowActions.FeaturedToggle id={p.id} featured={p.featured} />
+                    <FeaturedToggle id={p.id} featured={p.featured} />
                   </td>
                   <td className="font-mono text-paper/60">{p.order}</td>
                   <td className="font-mono text-caption text-paper/50">
                     {new Date(p.updatedAt).toLocaleDateString()}
                   </td>
                   <td className="text-right">
-                    <ProjectRowActions.Delete id={p.id} title={p.title} />
+                    <DeleteButton id={p.id} title={p.title} />
                   </td>
                 </tr>
               ))

@@ -1,7 +1,7 @@
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, Syne } from "next/font/google";
 import localFont from "next/font/local";
 
-export const sans = Inter({
+export const sans = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
@@ -15,28 +15,11 @@ export const mono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
-export const display = localFont({
-  src: [
-    {
-      path: "../../public/fonts/DxPlayhigh-Expanded.otf",
-      style: "normal",
-      weight: "500",
-    },
-    {
-      path: "../../public/fonts/DxPlayhigh-ExtraExpandedBack.otf",
-      style: "normal",
-      weight: "700",
-    },
-    {
-      path: "../../public/fonts/DxPlayhigh-CondensedItalic.otf",
-      style: "italic",
-      weight: "500",
-    },
-  ],
+export const display = Syne({
+  subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  preload: true,
-  fallback: ["ui-serif", "Georgia", "serif"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const script = localFont({
