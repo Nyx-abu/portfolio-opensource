@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -9,14 +9,9 @@ export function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const pathname = usePathname();
 
-  // Core dot position (exact)
+  // Exact cursor position
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-
-  // Outer ring position (spring)
-  const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
 
   // Manage native cursor hiding based on route
   useEffect(() => {
@@ -48,7 +43,8 @@ export function CustomCursor() {
         target.tagName.toLowerCase() === "a" ||
         target.tagName.toLowerCase() === "button" ||
         target.closest("a") ||
-        target.closest("button")
+        target.closest("button") ||
+        target.getAttribute("role") === "button"
       ) {
         setIsHovering(true);
       } else {
@@ -69,67 +65,68 @@ export function CustomCursor() {
   if (!isVisible || pathname?.startsWith('/admin')) return null;
 
   return (
-    <>
-      {/* Outer Targeting Ring (Spring trailing) */}
-      <motion.div
-        className="pointer-events-none fixed z-[9998] flex items-center justify-center rounded-full"
-        style={{
-          width: 56,
-          height: 56,
-          left: -28,  // Center the cursor precisely
-          top: -28,
-          x: cursorXSpring,
-          y: cursorYSpring,
-        }}
+    <motion.div
+      className="pointer-events-none fixed z-[9999] text-white mix-blend-difference"
+      style={{
+        width: 40,
+        height: 40,
+        left: -20, // Center precisely
+        top: -20,
+        x: cursorX,
+        y: cursorY,
+      }}
+    >
+      <motion.svg 
+        viewBox="0 0 40 40" 
+        className="w-full h-full overflow-visible"
         animate={{
-          scale: isHovering ? 1.5 : 1,
-          opacity: isHovering ? 0.9 : 0.4,
-        }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-      >
-        {/* Dynamic rotating dashes */}
-        <motion.div 
-          className="h-full w-full rounded-full border border-emerald-400/50"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          style={{ borderStyle: 'dashed', borderWidth: '1.5px' }}
-        />
-        {/* Subtle glow background when hovering */}
-        {isHovering && (
-          <div className="absolute inset-0 rounded-full bg-emerald-500/10 blur-[10px]" />
-        )}
-      </motion.div>
-
-      {/* Sputnik Core Pointer (Immediate, no spring delay so it feels native) */}
-      <motion.div
-        className="pointer-events-none fixed z-[9999] text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,1)]"
-        style={{
-          width: 24,
-          height: 24,
-          left: -12, // Center the cursor precisely
-          top: -12,
-          x: cursorX,
-          y: cursorY,
-        }}
-        animate={{
-          scale: isHovering ? 0.7 : 1,
+          scale: isHovering ? 1.25 : 1,
+          rotate: isHovering ? 45 : 0
         }}
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
       >
-        <svg viewBox="0 0 24 24" className="w-full h-full overflow-visible">
-          {/* Crosshair horizontal */}
-          <line x1="-4" y1="12" x2="28" y2="12" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
-          {/* Crosshair vertical */}
-          <line x1="12" y1="-4" x2="12" y2="28" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
-          
-          {/* Core dot */}
-          <circle cx="12" cy="12" r="2.5" fill="currentColor" />
-          
-          {/* Sleek satellite antennas */}
-          <path d="M 6 6 L 18 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.9" />
-          <path d="M 18 6 L 6 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.9" />
-        </svg>
-      </motion.div>
-    </>
+        {/* Core precision dot */}
+        <circle cx="20" cy="20" r="1.5" fill="currentColor" opacity="0.9" />
+
+        {/* Viewfinder brackets */}
+        <path d="M 14 10 L 10 10 L 10 14" fill="none" stroke="currentColor" strokeWidth="1.5" opacity={isHovering ? 0.9 : 0.4} />
+        <path d="M 26 10 L 30 10 L 30 14" fill="none" stroke="currentColor" strokeWidth="1.5" opacity={isHovering ? 0.9 : 0.4} />
+        <path d="M 14 30 L 10 30 L 10 26" fill="none" stroke="currentColor" strokeWidth="1.5" opacity={isHovering ? 0.9 : 0.4} />
+        <path d="M 26 30 L 30 30 L 30 26" fill="none" stroke="currentColor" strokeWidth="1.5" opacity={isHovering ? 0.9 : 0.4} />
+        
+        {/* Fine crosshairs */}
+        <line x1="20" y1="-4" x2="20" y2="12" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        <line x1="20" y1="44" x2="20" y2="28" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        <line x1="-4" y1="20" x2="12" y2="20" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        <line x1="44" y1="20" x2="28" y2="20" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+        
+        {/* Optional inner rotating ring for cinematic feel on hover */}
+        {isHovering && (
+          <motion.circle 
+            cx="20" cy="20" r="16" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="1" 
+            strokeDasharray="2 4"
+            opacity="0.3"
+            initial={{ rotate: 0 }}
+            animate={{ rotate: 180 }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+            style={{ transformOrigin: "20px 20px" }}
+          />
+        )}
+      </motion.svg>
+
+      {/* Target Lock Text */}
+      {isHovering && (
+        <motion.div 
+          initial={{ opacity: 0, x: 10 }}
+          animate={{ opacity: 1, x: 25 }}
+          className="absolute top-1/2 left-1/2 -translate-y-1/2 text-[9px] font-mono tracking-widest text-white ml-2 whitespace-nowrap opacity-80"
+        >
+          [TRGT.LOCK]
+        </motion.div>
+      )}
+    </motion.div>
   );
 }

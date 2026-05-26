@@ -47,17 +47,29 @@ export function Nav({ name = "Abdur Raheem" }: { name?: string }) {
         }}
       >
         <motion.div
-          className="absolute inset-0 bg-ink-950 border-b border-ink-700/40"
+          className="absolute inset-0 bg-ink-950 border-b border-ink-800/60"
           style={{ opacity }}
           aria-hidden
         />
+        {/* Tactical glowing bottom border */}
+        <motion.div
+          className="absolute bottom-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-accent-500/20 to-transparent"
+          style={{ opacity }}
+          aria-hidden
+        />
+
         <Container size="wide" className="relative">
           <div className="flex h-14 items-center justify-between md:h-20">
             <Link
               href="/"
-              className="font-display text-h3 leading-none tracking-[-0.02em] text-paper md:text-h2"
+              className="group flex items-center font-display text-h3 leading-none tracking-[-0.02em] md:text-h2"
             >
-              {name}.
+              <div className="relative mr-3 flex h-3 w-3 items-center justify-center">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-20 transition-opacity duration-500 group-hover:opacity-60" />
+                <span className="relative inline-flex h-1 w-1 rounded-full bg-accent-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
+              </div>
+              <span className="text-paper transition-all duration-500 group-hover:text-white group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">{name}</span>
+              <span className="text-accent-500 ml-0.5">.</span>
             </Link>
             <nav className="flex items-center gap-3 sm:gap-6 md:gap-10">
               {NAV_ITEMS.map((item) => (
@@ -65,38 +77,46 @@ export function Nav({ name = "Abdur Raheem" }: { name?: string }) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "hidden font-mono text-label uppercase tracking-[0.18em] text-paper/70 transition-colors hover:text-paper md:inline-block",
+                    "group relative hidden font-mono text-[10px] uppercase tracking-[0.2em] text-paper/50 transition-colors hover:text-white md:inline-block py-2",
                   )}
                 >
-                  {item.label}
+                  <span className="relative z-10">{item.label}</span>
+                  <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-accent-400 transition-all duration-300 ease-out group-hover:w-full group-hover:shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
                 </Link>
               ))}
               <Link
                 href="/#contact"
-                className="hidden sm:inline-flex items-center rounded-full border border-paper/30 px-4 py-1.5 font-mono text-label uppercase tracking-[0.16em] text-paper transition-colors hover:bg-paper hover:text-ink-950"
+                className="group relative hidden sm:inline-flex items-center overflow-hidden rounded-none border border-accent-500/30 bg-accent-500/5 px-5 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent-300 transition-all hover:border-accent-400 hover:bg-accent-400/10 hover:text-white hover:shadow-[0_0_20px_rgba(56,189,248,0.2)]"
               >
-                Get in touch
+                {/* Tech corner accents */}
+                <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-accent-400 transition-all group-hover:w-2 group-hover:h-2" />
+                <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-accent-400 transition-all group-hover:w-2 group-hover:h-2" />
+                
+                <span className="relative z-10 flex items-center gap-2">
+                  <div className="h-1.5 w-1.5 bg-accent-400 animate-pulse" />
+                  INITIATE_CONTACT
+                </span>
               </Link>
               <button
                 type="button"
                 onClick={() => setOpen((v) => !v)}
                 aria-expanded={open}
                 aria-label={open ? "Close menu" : "Open menu"}
-                className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-paper/25 text-paper md:hidden"
+                className="relative inline-flex h-10 w-10 items-center justify-center border border-accent-500/30 text-accent-400 md:hidden hover:bg-accent-500/10 transition-colors"
               >
                 <span className="sr-only">Toggle menu</span>
                 <motion.span
-                  className="absolute block h-px w-5 bg-paper"
+                  className="absolute block h-[1px] w-5 bg-current"
                   animate={{ rotate: open ? 45 : 0, y: open ? 0 : -4 }}
                   transition={{ duration: 0.2 }}
                 />
                 <motion.span
-                  className="absolute block h-px w-5 bg-paper"
+                  className="absolute block h-[1px] w-5 bg-current"
                   animate={{ opacity: open ? 0 : 1 }}
                   transition={{ duration: 0.2 }}
                 />
                 <motion.span
-                  className="absolute block h-px w-5 bg-paper"
+                  className="absolute block h-[1px] w-5 bg-current"
                   animate={{ rotate: open ? -45 : 0, y: open ? 0 : 4 }}
                   transition={{ duration: 0.2 }}
                 />
@@ -116,20 +136,22 @@ export function Nav({ name = "Abdur Raheem" }: { name?: string }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
             <div className="h-14" aria-hidden />
-            <nav className="flex flex-1 flex-col items-stretch gap-2 px-5 pt-10">
+            <nav className="relative z-10 flex flex-1 flex-col items-stretch gap-2 px-5 pt-10">
               {NAV_ITEMS.map((item, i) => (
                 <motion.div
                   key={item.href}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + i * 0.04, duration: 0.25 }}
                 >
                   <Link
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="block border-b border-ink-700/40 py-5 font-display text-h2 leading-none tracking-[-0.02em] text-paper"
+                    className="group block border-b border-ink-800 py-5 font-mono text-label tracking-[0.2em] text-paper/70 uppercase transition-colors hover:text-accent-400"
                   >
+                    <span className="text-accent-500/50 mr-2 opacity-0 transition-opacity group-hover:opacity-100">{`>`}</span>
                     {item.label}
                   </Link>
                 </motion.div>
@@ -143,9 +165,10 @@ export function Nav({ name = "Abdur Raheem" }: { name?: string }) {
                 <Link
                   href="/#contact"
                   onClick={() => setOpen(false)}
-                  className="inline-flex items-center rounded-full border border-paper/30 px-5 py-2 font-mono text-label uppercase tracking-[0.16em] text-paper"
+                  className="inline-flex items-center gap-3 border border-accent-500/30 bg-accent-500/10 px-6 py-3 font-mono text-label uppercase tracking-[0.2em] text-accent-300"
                 >
-                  Get in touch
+                  <div className="h-1.5 w-1.5 bg-accent-400 animate-pulse" />
+                  INITIATE_CONTACT
                 </Link>
               </motion.div>
             </nav>

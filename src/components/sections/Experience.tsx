@@ -1,8 +1,10 @@
 import { Container } from "@/components/ui/Container";
-import { MotionSpan } from "@/components/motion/MotionSpan";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
 import { TechPill } from "@/components/ui/TechPill";
+import { getExperience, getSkills } from "@/lib/data";
+import { RevealText } from "@/components/motion/RevealText";
+import { FadeIn } from "@/components/motion/FadeIn";
 
 const formatDate = (d?: Date | null) =>
   d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short" }) : "Present";
@@ -41,22 +43,44 @@ export async function Experience() {
                 </div>
               </FadeIn>
             ) : (
-              <ul className="divide-y divide-ink-700/40">
-                {exp.map((e, i) => (
-                  <FadeIn key={e.id} as="li" delay={i * 0.05}>
-                    <div className="group grid grid-cols-12 items-baseline gap-4 p-4 -mx-4 md:p-6 md:-mx-6 rounded-2xl border border-transparent transition-all duration-500 hover:bg-ink-900/40 hover:backdrop-blur-sm hover:border-ink-800/50">
-                      <Text variant="caption" className="col-span-12 text-paper/40 md:col-span-3">
-                        {formatDate(e.startDate)} — {e.current ? "Present" : formatDate(e.endDate)}
-                      </Text>
-                      <div className="col-span-12 md:col-span-9">
-                        <Text variant="h3" className="text-paper transition-colors group-hover:text-accent-300">
-                          {e.role} <span className="text-paper/50">· {e.company}</span>
-                        </Text>
+              <div className="relative border-l border-ink-800/40 ml-2 md:ml-4 py-4">
+                {/* Subtle gradient line overlay to make it look like a beam */}
+                <div className="absolute left-[-1px] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-accent-500/20 to-transparent" />
+                
+                <ul className="flex flex-col gap-12 md:gap-16">
+                  {exp.map((e, i) => (
+                    <FadeIn key={e.id} as="li" delay={i * 0.1}>
+                      <div className="group relative pl-8 md:pl-12 transition-transform duration-700 ease-out hover:translate-x-2">
+                        {/* The Node on the timeline */}
+                        <div className="absolute -left-[4.5px] top-1.5 h-2 w-2 rotate-45 border border-ink-600 bg-ink-950 transition-all duration-500 group-hover:scale-[2] group-hover:rotate-90 group-hover:border-accent-400 group-hover:bg-accent-500 group-hover:shadow-[0_0_20px_rgba(56,189,248,1)]" />
+                        
+                        {/* Connecting horizontal dash */}
+                        <div className="absolute left-0 top-[9px] h-px w-4 bg-ink-800/50 transition-all duration-700 group-hover:w-8 group-hover:bg-accent-500/50" />
+
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 items-baseline">
+                          <div className="md:col-span-5 lg:col-span-4">
+                            <Text variant="caption" className="font-mono text-[10px] tracking-[0.2em] text-paper/30 transition-colors duration-500 group-hover:text-accent-400/80 uppercase whitespace-nowrap">
+                              [{formatDate(e.startDate)} // {e.current ? "PRESENT" : formatDate(e.endDate)}]
+                            </Text>
+                          </div>
+                          
+                          <div className="md:col-span-7 lg:col-span-8">
+                            <Text variant="h3" className="text-paper/70 transition-all duration-500 group-hover:text-white group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+                              {e.role} 
+                            </Text>
+                            <Text variant="body" className="mt-1.5 font-light text-paper/40 transition-colors duration-500 group-hover:text-paper/70">
+                              {e.company}
+                            </Text>
+                          </div>
+                        </div>
+                        
+                        {/* Ambient Glow Background on Hover */}
+                        <div className="absolute inset-0 -z-10 -ml-12 bg-gradient-to-r from-accent-500/0 via-accent-500/5 to-transparent opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100" />
                       </div>
-                    </div>
-                  </FadeIn>
-                ))}
-              </ul>
+                    </FadeIn>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
         </div>
@@ -83,16 +107,14 @@ export async function Experience() {
                     </Text>
                     <div className="mt-4 flex flex-wrap items-baseline gap-3">
                       {group.items.map((s) => (
-                        <motion.div
+                        <FadeIn
                           key={s.id}
-                          initial={{ opacity: 0, y: 10 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: idx * 0.05 }}
+                          delay={idx * 0.05}
+                          y={10}
                           whileHover={{ scale: 1.05, y: -2 }}
                         >
                           <TechPill name={s.name} size="lg" animate={true} />
-                        </motion.div>
+                        </FadeIn>
                       ))}
                     </div>
                   </div>
