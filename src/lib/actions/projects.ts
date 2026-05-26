@@ -40,21 +40,37 @@ function revalidate() {
 export async function createProject(raw: ProjectInput) {
   await requireAdmin();
   const data = projectSchema.parse(raw);
-  const slug = data.slug ? slugify(data.slug) : slugify(data.title);
-  const project = await prisma.project.create({
-    data: {
-      ...data,
-      slug,
-      liveUrl: clean(data.liveUrl),
-      githubUrl: clean(data.githubUrl),
-      videoUrl: clean(data.videoUrl),
-      documentationUrl: clean(data.documentationUrl),
-      longDescription: clean(data.longDescription),
-      timeline: clean(data.timeline),
-    },
-  });
-  revalidate();
-  return project;
+  const baseSlug = data.slug ? slugify(data.slug) : slugify(data.title);
+
+  // Try the base slug first; on unique-constraint violations, append a counter
+  // suffix. Bounded retry so a runaway loop can't happen.
+  let slug = baseSlug;
+  for (let attempt = 0; attempt < 20; attempt++) {
+    try {
+      const project = await prisma.project.create({
+        data: {
+          ...data,
+          slug,
+          liveUrl: clean(data.liveUrl),
+          githubUrl: clean(data.githubUrl),
+          videoUrl: clean(data.videoUrl),
+          documentationUrl: clean(data.documentationUrl),
+          longDescription: clean(data.longDescription),
+          timeline: clean(data.timeline),
+        },
+      });
+      revalidate();
+      return project;
+    } catch (e) {
+      const code = (e as { code?: string }).code;
+      if (code === "P2002") {
+        slug = `${baseSlug}-${attempt + 2}`;
+        continue;
+      }
+      throw e;
+    }
+  }
+  throw new Error(`Could not find an available slug starting from "${baseSlug}"`);
 }
 
 export async function updateProject(id: string, raw: Partial<ProjectInput>) {

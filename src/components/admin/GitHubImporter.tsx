@@ -83,24 +83,29 @@ export function GitHubImporter() {
         setDocStatus("Used README.md as documentation fallback.");
       }
       startTransition(async () => {
-        const created = await createProject({
-          title: data.title,
-          description: data.description || `Imported from ${repo.fullName}`,
-          longDescription: null,
-          techStack: data.techStack,
-          tags: data.tags,
-          images: data.images,
-          videoUrls: [],
-          liveUrl: "",
-          githubUrl: data.githubUrl,
-          videoUrl: "",
-          documentationUrl: data.documentationUrl ?? "",
-          status: "DRAFT",
-          featured: false,
-          timeline: null,
-          order: 0,
-        });
-        router.push(`/admin/projects/${created.id}`);
+        try {
+          const created = await createProject({
+            title: data.title,
+            description: data.description || `Imported from ${repo.fullName}`,
+            longDescription: null,
+            techStack: data.techStack,
+            tags: data.tags,
+            images: data.images,
+            videoUrls: [],
+            liveUrl: "",
+            githubUrl: data.githubUrl,
+            videoUrl: "",
+            documentationUrl: data.documentationUrl ?? "",
+            status: "DRAFT",
+            featured: false,
+            timeline: null,
+            order: 0,
+          });
+          router.push(`/admin/projects/${created.id}`);
+        } catch (err) {
+          setImportError(err instanceof Error ? err.message : "Project creation failed");
+          setImportingFor(null);
+        }
       });
     } catch (e) {
       setImportError(e instanceof Error ? e.message : "Import failed");
