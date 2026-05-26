@@ -174,8 +174,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <Section spacing="compact">
             <Container size="wide">
               <FadeIn>
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl">
-                  <Image src={project.images[0]} alt={project.title} fill priority sizes="100vw" className="object-cover" />
+                <div className="w-full rounded-xl bg-ink-900/20 p-2 md:p-4 border border-ink-800/50 flex items-center justify-center">
+                  <img src={project.images[0]} alt={project.title} className="w-full h-auto max-h-[85vh] object-contain rounded-lg" />
                 </div>
               </FadeIn>
             </Container>
@@ -207,8 +207,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {project.images.slice(1).map((img, i) => (
                   <FadeIn key={img} delay={i * 0.05}>
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-                      <Image src={img} alt={`${project.title} image ${i + 2}`} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+                    <div className="w-full rounded-xl bg-ink-900/20 p-2 md:p-4 border border-ink-800/50 h-full flex items-center justify-center">
+                      <img src={img} alt={`${project.title} image ${i + 2}`} className="w-full h-auto max-h-[70vh] object-contain rounded-lg" />
                     </div>
                   </FadeIn>
                 ))}
@@ -268,6 +268,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                       id: p.id, slug: p.slug, title: p.title, description: p.description,
                       tags: p.tags, techStack: p.techStack, images: p.images,
                       featured: p.featured, timeline: p.timeline, index: i,
+                      githubUrl: p.githubUrl, liveUrl: p.liveUrl,
                     }}
                   />
                 ))}

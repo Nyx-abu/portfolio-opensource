@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={cn(sans.variable, mono.variable, display.variable, script.variable)}
       suppressHydrationWarning
     >
-      <body className="min-h-dvh selection:bg-accent-500/60 selection:text-paper">
+      <body className="min-h-dvh overflow-x-hidden selection:bg-accent-500/60 selection:text-paper">
         <CustomCursor />
         <a
           href="#main"

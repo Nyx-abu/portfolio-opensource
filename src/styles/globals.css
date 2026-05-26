@@ -29,11 +29,11 @@
     @apply bg-ink-950 text-paper font-sans;
     background-color: rgb(var(--color-ink));
     color: rgb(var(--color-paper));
-    text-wrap: pretty;
+    text-align: justify;
   }
 
   h1, h2, h3, h4 {
-    text-wrap: balance;
+    text-align: left;
   }
 
   ::selection {

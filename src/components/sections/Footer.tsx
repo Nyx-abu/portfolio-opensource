@@ -73,12 +73,9 @@ export function Footer({ name = "Abdur Raheem", social = [] }: FooterProps) {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col-reverse items-start justify-between gap-4 border-t border-ink-700/40 pt-8 md:flex-row md:items-end">
+        <div className="mt-16 border-t border-ink-700/40 pt-8">
           <Text variant="caption" className="text-paper/40">
             © {new Date().getFullYear()} {name}. All rights reserved.
-          </Text>
-          <Text variant="caption" className="text-paper/40">
-            Built with Next.js · Typography by Dx Playhigh &amp; Kiya Handwrite
           </Text>
         </div>
       </Container>

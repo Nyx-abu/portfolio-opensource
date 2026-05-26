@@ -53,7 +53,7 @@ export default async function AdminDashboard() {
         </h1>
       </header>
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Page views (7d)" value={stats.totalViews} />
         <Stat label="Unique sessions" value={stats.uniqueSessions} />
         <Stat label="Published" value={stats.publishedProjects} />

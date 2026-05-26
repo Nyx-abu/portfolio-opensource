@@ -5,6 +5,7 @@ import { Nav } from "@/components/sections/Nav";
 import { Footer } from "@/components/sections/Footer";
 import { ProjectsBrowser } from "@/components/sections/ProjectsBrowser";
 import { RevealText } from "@/components/motion/RevealText";
+import { ProjectsGraphic } from "@/components/motion/ProjectsGraphic";
 import { buildMetadata } from "@/lib/metadata";
 import { getAllProjects, getSocialLinks } from "@/lib/data";
 
@@ -18,11 +19,14 @@ export const metadata = buildMetadata({
 export default async function ProjectsIndexPage() {
   const [projects, social] = await Promise.all([getAllProjects(), getSocialLinks()]);
 
+  const techStacks = new Set(projects.flatMap((p) => p.techStack));
+
   return (
     <>
       <Nav />
-      <main id="main" className="min-h-dvh pt-32">
-        <Section spacing="default">
+      <main id="main" className="relative min-h-dvh pt-32 bg-ink-950 overflow-hidden">
+        <ProjectsGraphic projectCount={projects.length} techStackCount={techStacks.size} />
+        <Section spacing="default" className="relative z-10">
           <Container size="wide">
             <Text variant="caption" className="text-paper/40">
               Index
@@ -30,7 +34,7 @@ export default async function ProjectsIndexPage() {
             <RevealText
               as="h1"
               text="Projects"
-              className="mt-4 text-display-2xl font-display leading-[0.9] tracking-[-0.04em] text-paper"
+              className="mt-4 text-[4.5rem] md:text-[8rem] lg:text-[10rem] font-display leading-[0.85] tracking-[-0.04em] text-paper"
               stagger={0.06}
             />
             <Text variant="body-lg" className="mt-6 max-w-prose text-paper/55">
@@ -51,6 +55,8 @@ export default async function ProjectsIndexPage() {
             images: p.images,
             featured: p.featured,
             timeline: p.timeline,
+            githubUrl: p.githubUrl,
+            liveUrl: p.liveUrl,
           }))}
         />
       </main>

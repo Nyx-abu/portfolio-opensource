@@ -39,7 +39,7 @@ export function Hero() {
             <RevealText
               as="h1"
               text="Shipping full-stack products"
-              className="text-display-xl font-display leading-[0.88] tracking-[-0.04em] text-paper"
+              className="text-5xl md:text-6xl lg:text-7xl font-display leading-[0.9] tracking-[-0.04em] text-paper"
               stagger={0.06}
               delay={0.15}
             />

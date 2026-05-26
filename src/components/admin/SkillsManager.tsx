@@ -109,7 +109,7 @@ function SkillRow({
   const [name, setName] = useState(skill.name);
   const [category, setCategory] = useState(skill.category);
   return (
-    <li className="grid grid-cols-1 items-center gap-3 py-3 md:grid-cols-[1fr_1fr_auto]">
+    <li className="grid grid-cols-1 items-start gap-3 py-3 md:grid-cols-[1fr_1fr_auto] md:items-center">
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}

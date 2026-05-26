@@ -99,7 +99,7 @@ function Row({
   const [platform, setPlatform] = useState(row.platform);
   const [url, setUrl] = useState(row.url);
   return (
-    <li className="grid grid-cols-1 items-center gap-3 py-3 md:grid-cols-[1fr_2fr_auto]">
+    <li className="grid grid-cols-1 items-start gap-3 py-3 md:grid-cols-[1fr_2fr_auto] md:items-center">
       <input
         value={platform}
         onChange={(e) => setPlatform(e.target.value)}

@@ -19,6 +19,8 @@ export type ProjectCardData = {
   techStack: string[];
   images: string[];
   featured: boolean;
+  githubUrl?: string | null;
+  liveUrl?: string | null;
   timeline?: string | null;
   index: number;
 };
@@ -37,7 +39,10 @@ export function ProjectCard({ project, span = "half" }: { project: ProjectCardDa
 
   return (
     <motion.article
-      className={cn("group relative", spanClass)}
+      className={cn(
+        "group relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-xl border border-ink-700/50 bg-ink-900/20 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:border-paper/20 hover:bg-ink-900/40 hover:shadow-[0_8px_30px_rgba(255,255,255,0.04)]",
+        spanClass
+      )}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
       initial={reduced ? false : { opacity: 0, y: 30 }}
@@ -50,82 +55,98 @@ export function ProjectCard({ project, span = "half" }: { project: ProjectCardDa
         onClick={() =>
           track({ type: "project_click", projectId: project.id, projectTitle: project.title })
         }
-        className="block"
+        className="absolute inset-0 z-10"
+        aria-label={`View ${project.title} details`}
+      />
+
+      {/* Sci-fi animated background elements */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-paper/5 via-ink-900/0 to-ink-950/0 opacity-50 transition-opacity duration-700 group-hover:opacity-100" />
+      
+      {/* Decorative corner grid/HUD effect */}
+      <svg
+        className="absolute -right-4 -top-4 z-0 h-32 w-32 text-paper/5 transition-transform duration-700 group-hover:scale-110 group-hover:text-paper/10"
+        viewBox="0 0 100 100"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <div
-          className={cn(
-            "relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-ink-700/50 bg-ink-900",
-            span === "full" && "md:aspect-[21/9]",
-          )}
-        >
-          {hero ? (
-            <Image
-              src={hero}
-              alt={project.title}
-              fill
-              sizes={span === "full" ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
-              className={cn(
-                "object-cover transition-transform duration-1000 ease-out-expo",
-                hovered ? "scale-[1.04]" : "scale-100",
-              )}
+        <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" />
+        <circle cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="0.5" />
+        <path d="M50 0L50 100M0 50L100 50" stroke="currentColor" strokeWidth="0.5" />
+      </svg>
+
+      <div className="relative z-10 flex flex-1 flex-col p-7 pointer-events-none">
+        {/* Top metadata bar */}
+        <div className="mb-6 flex items-center justify-between border-b border-ink-700/40 pb-4">
+          <div className="flex items-center gap-3">
+            <motion.div
+              className="h-1.5 w-1.5 rounded-full bg-paper/40"
+              animate={{
+                backgroundColor: hovered ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.4)",
+                boxShadow: hovered ? "0 0 8px rgba(255,255,255,0.8)" : "0 0 0px rgba(255,255,255,0)",
+              }}
+              transition={{ duration: 0.3 }}
             />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-display text-display-md text-ink-700">
-                {project.title.slice(0, 1)}
-              </span>
-            </div>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-paper/40 transition-colors group-hover:text-paper/70">
+              SYS.PRJ.{project.id.slice(0, 6)}
+            </span>
+          </div>
+          {project.featured && (
+            <Badge tone="featured" className="origin-right scale-90">
+              Featured
+            </Badge>
           )}
-
-          <motion.div
-            className="absolute inset-0 bg-ink-950/40"
-            animate={{ opacity: hovered ? 0 : 0.55 }}
-            transition={{ duration: duration.slow, ease: ease.outExpo }}
-          />
-
-          <motion.div
-            className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink-950 to-transparent"
-            animate={{ opacity: hovered ? 0.9 : 0.7 }}
-          />
-
-          <div className="absolute left-5 top-5 flex items-center gap-2">
-            {project.featured && <Badge tone="featured">Featured</Badge>}
-          </div>
-
-          <motion.div
-            className="absolute right-5 top-5 rounded-full border border-paper/30 bg-paper/10 p-3 backdrop-blur"
-            animate={{ rotate: hovered ? 45 : 0, scale: hovered ? 1.05 : 1 }}
-            transition={{ duration: duration.normal, ease: ease.outExpo }}
-            aria-hidden
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
-          </motion.div>
         </div>
 
-        <div className="mt-5 flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <Text variant="h3" className="text-paper transition-colors group-hover:text-paper">
-              {project.title}
-            </Text>
-            <Text variant="body" className="mt-1.5 text-paper/55">
-              {project.description}
-            </Text>
-          </div>
+        {/* Title and Description */}
+        <div className="flex-1">
+          <Text variant="h3" className="text-xl text-paper transition-colors group-hover:text-white">
+            {project.title}
+          </Text>
+          <Text variant="body" className="mt-3 line-clamp-3 text-paper/50 transition-colors group-hover:text-paper/70 text-justify">
+            {project.description}
+          </Text>
         </div>
 
-        <div className="mt-3 flex flex-wrap gap-1.5">
+        {/* Tech Stack */}
+        <div className="mt-8 flex flex-wrap gap-2">
           {project.techStack.slice(0, 4).map((t) => (
             <span
               key={t}
-              className="font-mono text-caption uppercase tracking-[0.12em] text-paper/40"
+              className="rounded-sm border border-ink-700/30 bg-ink-900/30 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-paper/50 transition-colors group-hover:border-ink-700/80 group-hover:text-paper/90"
             >
               {t}
             </span>
           ))}
         </div>
-      </Link>
+      </div>
+
+      {/* Buttons */}
+      {(project.githubUrl || project.liveUrl) && (
+        <div className="relative z-20 mt-auto flex flex-wrap items-center gap-3 p-7 pt-0">
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/btn relative inline-flex flex-1 items-center justify-center gap-2 overflow-hidden rounded border border-ink-700/50 bg-ink-900/50 py-3 text-[10px] font-mono uppercase tracking-[0.2em] text-paper transition-all hover:border-white/30 hover:bg-white/5 min-w-[120px]"
+            >
+              <span className="relative z-10">GitHub</span>
+              <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full transition-transform duration-500 group-hover/btn:translate-x-full" />
+            </a>
+          )}
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/btn relative inline-flex flex-1 items-center justify-center gap-2 overflow-hidden rounded bg-paper py-3 text-[10px] font-mono uppercase tracking-[0.2em] text-ink-950 transition-transform hover:scale-[1.02] min-w-[120px]"
+            >
+              <span className="relative z-10 font-bold">Live Link</span>
+              <div className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-black/10 to-transparent -translate-x-full transition-transform duration-500 group-hover/btn:translate-x-full" />
+            </a>
+          )}
+        </div>
+      )}
     </motion.article>
   );
 }

@@ -36,8 +36,8 @@ export default async function AdminProjectsPage() {
 
       <GitHubImporter />
 
-      <div className="overflow-hidden rounded-xl border border-ink-700/40">
-        <table className="w-full text-left text-body-sm">
+      <div className="overflow-x-auto rounded-xl border border-ink-700/40">
+        <table className="w-full text-left text-body-sm min-w-[800px]">
           <thead className="border-b border-ink-700/40 bg-ink-900/40">
             <tr className="font-mono uppercase tracking-[0.14em] text-paper/40 [&>th]:px-4 [&>th]:py-3 [&>th]:text-caption">
               <th>Title</th>

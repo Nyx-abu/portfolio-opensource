@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/cn";
 import { Text } from "@/components/ui/Text";
 
@@ -27,8 +27,33 @@ export function AdminShell({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  // Close sidebar on path change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <div className="flex min-h-dvh">
+    <div className="flex min-h-dvh relative">
+      {/* Mobile Backdrop */}
+      {open && (
+        <div 
+          className="fixed inset-0 z-20 bg-ink-950/80 backdrop-blur-sm md:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
+      
       <aside
         className={cn(
           "fixed inset-y-0 left-0 z-30 w-64 border-r border-ink-700/40 bg-ink-950/95 backdrop-blur transition-transform md:relative md:translate-x-0",

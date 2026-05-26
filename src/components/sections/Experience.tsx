@@ -46,7 +46,7 @@ export async function Experience() {
               <ul className="divide-y divide-ink-700/40">
                 {exp.map((e, i) => (
                   <FadeIn key={e.id} as="li" delay={i * 0.05}>
-                    <div className="group grid grid-cols-12 items-baseline gap-4 p-6 -mx-6 rounded-2xl border border-transparent transition-all duration-500 hover:bg-ink-900/40 hover:backdrop-blur-sm hover:border-ink-800/50">
+                    <div className="group grid grid-cols-12 items-baseline gap-4 p-4 -mx-4 md:p-6 md:-mx-6 rounded-2xl border border-transparent transition-all duration-500 hover:bg-ink-900/40 hover:backdrop-blur-sm hover:border-ink-800/50">
                       <Text variant="caption" className="col-span-12 text-paper/40 md:col-span-3">
                         {formatDate(e.startDate)} — {e.current ? "Present" : formatDate(e.endDate)}
                       </Text>

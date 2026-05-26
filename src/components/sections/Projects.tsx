@@ -19,6 +19,8 @@ export async function Projects() {
     techStack: p.techStack,
     images: p.images,
     featured: p.featured,
+    githubUrl: p.githubUrl,
+    liveUrl: p.liveUrl,
     timeline: p.timeline,
     index: i,
   }));
@@ -59,10 +61,9 @@ export async function Projects() {
               </div>
             </FadeIn>
           ) : (
-            projects.map((p, i) => {
-              const span = i === 0 ? "full" : "half";
-              return <ProjectCard key={p.id} project={{ ...p, index: i }} span={span} />;
-            })
+            projects.map((p, i) => (
+              <ProjectCard key={p.id} project={{ ...p, index: i }} span="half" />
+            ))
           )}
         </div>
 
