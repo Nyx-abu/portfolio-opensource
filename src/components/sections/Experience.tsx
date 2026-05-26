@@ -23,7 +23,7 @@ export async function Experience() {
             <RevealText
               as="h2"
               text="A few stops"
-              className="mt-4 text-display-xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
+              className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
             />
             <FadeIn delay={0.2}>
               <p className="mt-6 max-w-sm text-body font-light text-paper/60">
@@ -71,7 +71,7 @@ export async function Experience() {
             <RevealText
               as="h3"
               text="Stack"
-              className="mt-4 text-display-lg font-display leading-[0.85] tracking-[-0.02em] text-paper"
+              className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
             />
           </div>
 

@@ -36,7 +36,7 @@ export async function Projects() {
             <RevealText
               as="h2"
               text="Things I've made"
-              className="mt-4 text-display-xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
+              className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
               stagger={0.05}
             />
           </div>

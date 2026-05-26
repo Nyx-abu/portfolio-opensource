@@ -18,7 +18,7 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-dvh items-end overflow-hidden bg-ink-950 pb-20 pt-32 md:pb-28"
+      className="relative flex min-h-dvh items-end overflow-hidden bg-ink-950 pb-16 pt-24 md:pb-28 md:pt-32"
     >
       <HeroGraphic />
       <Container size="wide" className="relative z-10">
@@ -39,7 +39,7 @@ export function Hero() {
             <RevealText
               as="h1"
               text="Shipping full-stack products"
-              className="text-5xl md:text-6xl lg:text-7xl font-display leading-[0.9] tracking-[-0.04em] text-paper"
+              className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-display leading-[0.95] tracking-[-0.04em] text-paper"
               stagger={0.06}
               delay={0.15}
             />
@@ -47,7 +47,7 @@ export function Hero() {
             <RevealText
               as="p"
               text="from hello world to live traffic."
-              className="mt-4 text-2xl md:text-3xl font-sans font-light leading-tight tracking-tight text-paper/60"
+              className="mt-4 text-xl sm:text-2xl md:text-3xl font-sans font-light leading-tight tracking-tight text-paper/60"
               stagger={0.05}
               delay={0.55}
             />

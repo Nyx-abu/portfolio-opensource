@@ -11,8 +11,8 @@ export async function About() {
 
   return (
     <Section id="about" spacing="vast" className="bg-ink-950 relative overflow-hidden">
-      {/* Background ambient glow */}
-      <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[800px] h-[800px] bg-accent-900/10 rounded-full blur-[120px] pointer-events-none" />
+      {/* Background ambient glow — sized fluidly so it never pushes layout on small screens */}
+      <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[60vw] max-w-[800px] aspect-square bg-accent-900/10 rounded-full blur-[120px] pointer-events-none" />
 
       <Container size="wide" className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-16 lg:gap-x-16 items-center">

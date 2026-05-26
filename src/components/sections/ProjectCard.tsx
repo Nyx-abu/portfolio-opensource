@@ -74,7 +74,7 @@ export function ProjectCard({ project, span = "half" }: { project: ProjectCardDa
         <path d="M50 0L50 100M0 50L100 50" stroke="currentColor" strokeWidth="0.5" />
       </svg>
 
-      <div className="relative z-10 flex flex-1 flex-col p-7 pointer-events-none">
+      <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-7 pointer-events-none">
         {/* Top metadata bar */}
         <div className="mb-6 flex items-center justify-between border-b border-ink-700/40 pb-4">
           <div className="flex items-center gap-3">
@@ -122,7 +122,7 @@ export function ProjectCard({ project, span = "half" }: { project: ProjectCardDa
 
       {/* Buttons */}
       {(project.githubUrl || project.liveUrl) && (
-        <div className="relative z-20 mt-auto flex flex-wrap items-center gap-3 p-7 pt-0">
+        <div className="relative z-20 mt-auto flex flex-wrap items-center gap-3 p-5 pt-0 sm:p-7 sm:pt-0">
           {project.githubUrl && (
             <a
               href={project.githubUrl}

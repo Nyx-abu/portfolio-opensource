@@ -94,7 +94,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main id="main" className="min-h-dvh pt-32">
+      <main id="main" className="min-h-dvh pt-20 md:pt-32">
         <Section spacing="compact">
           <Container size="wide">
             <FadeIn>

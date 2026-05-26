@@ -24,7 +24,7 @@ export default async function ProjectsIndexPage() {
   return (
     <>
       <Nav />
-      <main id="main" className="relative min-h-dvh pt-32 bg-ink-950 overflow-hidden">
+      <main id="main" className="relative min-h-dvh pt-20 md:pt-32 bg-ink-950 overflow-hidden">
         <ProjectsGraphic projectCount={projects.length} techStackCount={techStacks.size} />
         <Section spacing="default" className="relative z-10">
           <Container size="wide">

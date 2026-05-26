@@ -23,13 +23,13 @@ export function Contact({ email = "hello@example.com", social = [] }: ContactPro
           <RevealText
             as="h2"
             text="Have something worth"
-            className="text-display-2xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
+            className="text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
             stagger={0.05}
           />
           <RevealText
             as="h2"
             text="building together?"
-            className="text-display-2xl font-display leading-[0.85] tracking-[-0.02em] text-paper/55"
+            className="text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper/55"
             stagger={0.05}
             delay={0.25}
           />
@@ -41,12 +41,12 @@ export function Contact({ email = "hello@example.com", social = [] }: ContactPro
               <a
                 href={`mailto:${email}`}
                 onClick={() => track({ type: "contact_click" })}
-                className="group inline-flex items-baseline gap-3 font-display text-h3 md:text-display-sm tracking-tight text-paper transition-all hover:bg-gradient-to-r hover:from-accent-400 hover:to-emerald-400 hover:bg-clip-text hover:text-transparent"
+                className="group inline-flex max-w-full items-baseline gap-3 font-display text-xl sm:text-h3 md:text-display-sm tracking-tight text-paper transition-all hover:bg-gradient-to-r hover:from-accent-400 hover:to-emerald-400 hover:bg-clip-text hover:text-transparent"
               >
-                <span className="border-b border-ink-700/60 pb-1 transition-colors group-hover:border-accent-400">
+                <span className="break-all border-b border-ink-700/60 pb-1 transition-colors group-hover:border-accent-400">
                   {email}
                 </span>
-                <span aria-hidden className="text-paper/40 transition-transform group-hover:translate-x-1">
+                <span aria-hidden className="shrink-0 text-paper/40 transition-transform group-hover:translate-x-1">
                   →
                 </span>
               </a>
