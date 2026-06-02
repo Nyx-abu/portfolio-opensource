@@ -3,15 +3,15 @@ import type { Metadata } from "next";
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const siteMeta = {
-  name: "Abdur Raheem",
-  shortName: "Abdur",
-  title: "Abdur Raheem — Full-Stack Engineer",
+  name: "Jane Doe",
+  shortName: "Jane",
+  title: "Jane Doe — Full-Stack Engineer",
   description:
-    "Full-stack engineer shipping AI-native products end-to-end — Next.js, TypeScript, PostgreSQL, RAG and real-time systems. Based in Chennai, open to remote.",
-  email: "abdurraheem000nyx@gmail.com",
-  location: "Chennai, India",
-  github: "https://github.com/Nyx-abu",
-  linkedin: "https://linkedin.com/in/abdur-raheem-k",
+    "Full-stack engineer shipping AI-native products end-to-end — Next.js, TypeScript, PostgreSQL, RAG and real-time systems. Based in San Francisco, open to remote.",
+  email: "hello@example.com",
+  location: "San Francisco, CA",
+  github: "https://github.com",
+  linkedin: "https://linkedin.com",
   ogImage: "/opengraph-image",
   twitter: "",
 } as const;
