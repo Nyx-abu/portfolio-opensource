@@ -1,11 +1,45 @@
 "use client";
 
 import { FadeIn } from "@/components/motion/FadeIn";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 export function PersonnelID() {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 40 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 40 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   return (
-    <FadeIn className="w-full">
-      <div className="relative group w-full mx-auto lg:mx-0">
+    <FadeIn className="w-full relative" style={{ perspective: 1000 }}>
+      <motion.div 
+        className="relative group w-full mx-auto lg:mx-0"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      >
+        {/* Under-glow for 3D depth */}
+        <div className="absolute inset-4 bg-accent-500/20 blur-2xl -z-10 transition-opacity duration-500 group-hover:opacity-100 opacity-0" style={{ transform: "translateZ(-50px)" }} />
         {/* ID Frame / Glass Container */}
         <div className="relative overflow-hidden rounded-xl bg-ink-900/40 border border-ink-700/60 p-2 backdrop-blur-md shadow-2xl">
           
@@ -52,7 +86,7 @@ export function PersonnelID() {
           </div>
 
         </div>
-      </div>
+      </motion.div>
     </FadeIn>
   );
 }

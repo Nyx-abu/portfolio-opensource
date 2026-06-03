@@ -5,6 +5,7 @@ import { buildMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/cn";
 import { Analytics } from "@/components/providers/Analytics";
 import { CustomCursor } from "@/components/motion/CustomCursor";
+import { Preloader } from "@/components/motion/Preloader";
 
 export const metadata: Metadata = buildMetadata();
 export const viewport: Viewport = {
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="min-h-dvh overflow-x-hidden selection:bg-accent-500/60 selection:text-paper">
+        <Preloader />
         <CustomCursor />
         <a
           href="#main"

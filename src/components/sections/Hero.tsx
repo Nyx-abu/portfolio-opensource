@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { Text } from "@/components/ui/Text";
 import { RevealText } from "@/components/motion/RevealText";
 import { HeroGraphic } from "@/components/motion/HeroGraphic";
+import { Magnetic } from "@/components/motion/Magnetic";
 import { duration, ease } from "@/lib/motion";
 
 export function Hero() {
@@ -39,7 +40,7 @@ export function Hero() {
             <RevealText
               as="h1"
               text="Shipping full-stack products"
-              className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-display leading-[0.95] tracking-[-0.04em] text-paper"
+              className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-display leading-[0.95] tracking-tight text-paper"
               stagger={0.06}
               delay={0.15}
             />
@@ -91,26 +92,20 @@ export function Hero() {
 function ScrollIndicator() {
   return (
     <motion.div
-      className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6, delay: 1.6 }}
+      className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 1.6, ease: ease.outExpo }}
     >
-      <div className="flex flex-col items-center gap-3">
-        <Text variant="caption" className="text-paper/40">
-          Scroll
-        </Text>
-        <motion.div
-          className="relative h-12 w-px overflow-hidden bg-paper/15"
-          aria-hidden
-        >
-          <motion.span
-            className="absolute left-0 top-0 block h-4 w-px bg-paper"
-            animate={{ y: [0, 32, 0] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+      <Magnetic strength={30}>
+        <div className="group flex h-[80px] w-[50px] cursor-pointer flex-col items-center justify-start rounded-full border border-paper/20 bg-ink-950/20 p-2 backdrop-blur-md transition-colors hover:border-accent-500/50 hover:bg-accent-500/10" onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+          <motion.div
+            className="h-2 w-2 rounded-full bg-paper shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all group-hover:bg-accent-400 group-hover:shadow-[0_0_12px_rgba(56,189,248,0.8)]"
+            animate={{ y: [0, 48, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
-        </motion.div>
-      </div>
+        </div>
+      </Magnetic>
     </motion.div>
   );
 }

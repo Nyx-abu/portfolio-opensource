@@ -6,6 +6,36 @@ import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
+import { Magnetic } from "@/components/motion/Magnetic";
+
+function CharReveal({ text }: { text: string }) {
+  return (
+    <span className="relative inline-flex overflow-hidden">
+      <span className="inline-flex">
+        {text.split("").map((char, i) => (
+          <span
+            key={i}
+            className="inline-block transition-transform duration-500 ease-[cubic-bezier(0.7,0,0.2,1)] group-hover:-translate-y-full"
+            style={{ transitionDelay: `${i * 0.02}s` }}
+          >
+            {char === " " ? "\u00A0" : char}
+          </span>
+        ))}
+      </span>
+      <span className="absolute left-0 top-0 inline-flex text-white">
+        {text.split("").map((char, i) => (
+          <span
+            key={i}
+            className="inline-block translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.7,0,0.2,1)] group-hover:translate-y-0"
+            style={{ transitionDelay: `${i * 0.02}s` }}
+          >
+             {char === " " ? "\u00A0" : char}
+          </span>
+        ))}
+      </span>
+    </span>
+  );
+}
 
 const NAV_ITEMS = [
   { href: "/#about", label: "About" },
@@ -60,43 +90,48 @@ export function Nav({ name = "Abdur Raheem" }: { name?: string }) {
 
         <Container size="wide" className="relative">
           <div className="flex h-14 items-center justify-between md:h-20">
-            <Link
-              href="/"
-              className="group flex items-center font-display text-h3 leading-none tracking-[-0.02em] md:text-h2"
-            >
-              <div className="relative mr-3 flex h-3 w-3 items-center justify-center">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-20 transition-opacity duration-500 group-hover:opacity-60" />
-                <span className="relative inline-flex h-1 w-1 rounded-full bg-accent-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
-              </div>
-              <span className="text-paper transition-all duration-500 group-hover:text-white group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">{name}</span>
-              <span className="text-accent-500 ml-0.5">.</span>
-            </Link>
+            <Magnetic strength={10}>
+              <Link
+                href="/"
+                className="group flex items-center font-display text-h3 leading-none tracking-[-0.02em] md:text-h2"
+              >
+                <div className="relative mr-3 flex h-3 w-3 items-center justify-center">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-20 transition-opacity duration-500 group-hover:opacity-60" />
+                  <span className="relative inline-flex h-1 w-1 rounded-full bg-accent-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
+                </div>
+                <span className="text-paper transition-all duration-500 group-hover:text-white group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">{name}</span>
+                <span className="text-accent-500 ml-0.5">.</span>
+              </Link>
+            </Magnetic>
             <nav className="flex items-center gap-3 sm:gap-6 md:gap-10">
               {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "group relative hidden font-mono text-[10px] uppercase tracking-[0.2em] text-paper/50 transition-colors hover:text-white md:inline-block py-2",
-                  )}
-                >
-                  <span className="relative z-10">{item.label}</span>
-                  <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-accent-400 transition-all duration-300 ease-out group-hover:w-full group-hover:shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
-                </Link>
+                <Magnetic key={item.href} strength={20}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "group relative hidden font-mono text-[10px] uppercase tracking-[0.2em] text-paper/50 transition-colors hover:text-white md:inline-flex items-center justify-center py-2 px-2",
+                    )}
+                  >
+                    <span className="relative z-10"><CharReveal text={item.label} /></span>
+                    <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-accent-400 transition-all duration-300 ease-out group-hover:w-full group-hover:shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
+                  </Link>
+                </Magnetic>
               ))}
-              <Link
-                href="/#contact"
-                className="group relative hidden sm:inline-flex items-center overflow-hidden rounded-none border border-accent-500/30 bg-accent-500/5 px-5 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent-300 transition-all hover:border-accent-400 hover:bg-accent-400/10 hover:text-white hover:shadow-[0_0_20px_rgba(56,189,248,0.2)]"
-              >
-                {/* Tech corner accents */}
-                <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-accent-400 transition-all group-hover:w-2 group-hover:h-2" />
-                <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-accent-400 transition-all group-hover:w-2 group-hover:h-2" />
-                
-                <span className="relative z-10 flex items-center gap-2">
-                  <div className="h-1.5 w-1.5 bg-accent-400 animate-pulse" />
-                  INITIATE_CONTACT
-                </span>
-              </Link>
+              <Magnetic strength={30}>
+                <Link
+                  href="/#contact"
+                  className="group relative hidden sm:inline-flex items-center overflow-hidden rounded-none border border-accent-500/30 bg-accent-500/5 px-5 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent-300 transition-all hover:border-accent-400 hover:bg-accent-400/10 hover:text-white hover:shadow-[0_0_20px_rgba(56,189,248,0.2)]"
+                >
+                  {/* Tech corner accents */}
+                  <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-accent-400 transition-all group-hover:w-2 group-hover:h-2" />
+                  <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-accent-400 transition-all group-hover:w-2 group-hover:h-2" />
+                  
+                  <span className="relative z-10 flex items-center gap-2">
+                    <div className="h-1.5 w-1.5 bg-accent-400 animate-pulse" />
+                    <CharReveal text="INITIATE_CONTACT" />
+                  </span>
+                </Link>
+              </Magnetic>
               <button
                 type="button"
                 onClick={() => setOpen((v) => !v)}

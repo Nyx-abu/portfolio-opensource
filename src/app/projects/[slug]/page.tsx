@@ -15,6 +15,7 @@ import { Nav } from "@/components/sections/Nav";
 import { Footer } from "@/components/sections/Footer";
 import { MarkdownRenderer } from "@/components/ui/MarkdownRenderer";
 import { ParallaxImage } from "@/components/motion/ParallaxImage";
+import { HorizontalGallery } from "@/components/motion/HorizontalGallery";
 import { FiGithub, FiExternalLink, FiFileText } from "react-icons/fi";
 import { prisma } from "@/lib/db";
 import { getProjectBySlug, getSocialLinks } from "@/lib/data";
@@ -233,25 +234,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Section>
         )}
 
-        {/* Additional images gallery */}
+        {/* Cinematic Horizontal Scroll Gallery */}
         {project.images.length > 1 && (
-          <Section spacing="none" className="mb-16 md:mb-24">
+          <div className="mb-16 md:mb-32">
             <Container size="wide">
               <FadeIn>
-                <Text variant="label" className="text-paper/40 mb-6">Gallery</Text>
+                <Text variant="label" className="text-paper/40 mb-12">Gallery Exhibition</Text>
               </FadeIn>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {project.images.slice(1).map((img, i) => (
-                  <FadeIn key={img} delay={i * 0.05}>
-                    <div className="group relative w-full overflow-hidden rounded-xl border border-ink-800/50 bg-ink-900/20 p-2 md:p-4 transition-all duration-500 hover:border-accent-500/40 hover:bg-ink-900/40">
-                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent-500/10 via-ink-900/0 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100 pointer-events-none" />
-                      <img src={img} alt={`${project.title} image ${i + 2}`} className="relative z-10 w-full h-auto max-h-[60vh] object-contain rounded-lg shadow-xl transition-transform duration-700 group-hover:scale-[1.03]" />
-                    </div>
-                  </FadeIn>
-                ))}
-              </div>
             </Container>
-          </Section>
+            <HorizontalGallery images={project.images.slice(1)} title={project.title} />
+          </div>
         )}
 
         {/* Videos section */}

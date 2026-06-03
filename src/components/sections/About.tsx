@@ -2,7 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
 import { FadeIn } from "@/components/motion/FadeIn";
-import { RevealText } from "@/components/motion/RevealText";
+import { ScrollFillText } from "@/components/motion/ScrollFillText";
 import { getAboutContent } from "@/lib/data";
 import { PersonnelID } from "@/components/motion/PersonnelID";
 
@@ -28,11 +28,9 @@ export async function About() {
               01 — About
             </Text>
 
-            <RevealText
-              as="h2"
+            <ScrollFillText
               text={about.headline}
-              className="text-display-sm md:text-display-md font-sans font-light leading-[1.15] tracking-tight text-paper"
-              stagger={0.04}
+              className="text-display-sm md:text-display-md font-sans font-light leading-[1.15] tracking-tight text-paper mt-6"
             />
 
             <FadeIn delay={0.2}>

@@ -1,12 +1,20 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { memo } from "react";
 
 // Memoize the component to prevent unnecessary re-renders
 export const HeroGraphic = memo(function HeroGraphic() {
+  const { scrollY } = useScroll();
+  const scale = useTransform(scrollY, [0, 1000], [1, 1.6]);
+  const y = useTransform(scrollY, [0, 1000], [0, 250]);
+  const opacity = useTransform(scrollY, [0, 800], [0.9, 0]);
+
   return (
-    <div className="absolute inset-0 flex items-center justify-center overflow-hidden opacity-90 pointer-events-none z-0">
+    <motion.div 
+      style={{ scale, y, opacity }}
+      className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none z-0"
+    >
       {/* Container sized to cover the whole screen and then some */}
       <div className="relative w-[250vw] sm:w-[180vw] lg:w-[140vw] max-w-[2000px] aspect-square mix-blend-screen">
         
@@ -156,6 +164,6 @@ export const HeroGraphic = memo(function HeroGraphic() {
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 });
