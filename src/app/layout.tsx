@@ -4,6 +4,7 @@ import { sans, mono, display, script } from "@/lib/fonts";
 import { buildMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/cn";
 import { Analytics } from "@/components/providers/Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { CustomCursor } from "@/components/motion/CustomCursor";
 import { Preloader } from "@/components/motion/Preloader";
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         {children}
         <Analytics />
+        <VercelAnalytics />
         <div className="noise-overlay" aria-hidden />
       </body>
     </html>

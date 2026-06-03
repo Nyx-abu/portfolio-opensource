@@ -20,6 +20,7 @@
     "@auth/prisma-adapter": "^2.7.4",
     "@prisma/client": "^5.22.0",
     "@tailwindcss/typography": "^0.5.19",
+    "@vercel/analytics": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.10.0",
     "clsx": "^2.1.1",
