@@ -1,10 +1,10 @@
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
-import { TechPill } from "@/components/ui/TechPill";
 import { getExperience, getSkills } from "@/lib/data";
 import { RevealText } from "@/components/motion/RevealText";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { VelocityMarquee } from "@/components/motion/VelocityMarquee";
 
 const formatDate = (d?: Date | null) =>
   d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short" }) : "Present";
@@ -85,42 +85,39 @@ export async function Experience() {
           </div>
         </div>
 
-        <div className="mt-32 grid grid-cols-12 gap-y-12 md:gap-x-12">
-          <div className="col-span-12 md:col-span-4">
-            <Text variant="caption" className="text-paper/40">
-              Tools &amp; languages
-            </Text>
-            <RevealText
-              as="h3"
-              text="Stack"
-              className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
-            />
-          </div>
-
-          <div className="col-span-12 md:col-span-8">
-            <div className="space-y-12">
-              {skillGroups.map((group, idx) => (
-                <FadeIn key={group.category} delay={idx * 0.05}>
-                  <div>
-                    <Text variant="label" className="text-paper/50">
-                      {group.category}
-                    </Text>
-                    <div className="mt-4 flex flex-wrap items-baseline gap-3">
-                      {group.items.map((s) => (
-                        <FadeIn
-                          key={s.id}
-                          delay={idx * 0.05}
-                          y={10}
-                          whileHover={{ scale: 1.05, y: -2 }}
-                        >
-                          <TechPill name={s.name} size="lg" animate={true} />
-                        </FadeIn>
-                      ))}
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
+        <div className="mt-32 w-full border-t border-ink-800/40 pt-16 md:pt-24 pb-10">
+          <Container size="wide" className="mb-12">
+            <div className="grid grid-cols-12 gap-y-12 md:gap-x-12">
+              <div className="col-span-12 md:col-span-4">
+                <Text variant="caption" className="text-paper/40">
+                  Tools &amp; languages
+                </Text>
+                <RevealText
+                  as="h3"
+                  text="Stack"
+                  className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
+                />
+              </div>
             </div>
+          </Container>
+
+          <div className="w-full flex flex-col gap-6 md:gap-8 overflow-hidden py-10 bg-ink-950">
+            {skillGroups.map((group, idx) => {
+              const textString = group.items.map(s => s.name).join(" // ") + " // ";
+              const baseVel = idx % 2 === 0 ? 0.8 : -0.8;
+              const outlineClass = idx % 2 === 0 
+                ? "text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.4)]" 
+                : "text-paper/80";
+
+              return (
+                <VelocityMarquee 
+                  key={group.category} 
+                  text={textString} 
+                  baseVelocity={baseVel} 
+                  className={`text-6xl md:text-8xl lg:text-[7vw] font-display uppercase tracking-tighter ${outlineClass}`}
+                />
+              );
+            })}
           </div>
         </div>
       </Container>

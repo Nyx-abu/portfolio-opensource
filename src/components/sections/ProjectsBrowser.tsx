@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { ProjectStack } from "@/components/motion/ProjectStack";
+import { TypographicList } from "@/components/motion/TypographicList";
 
 export function ProjectsBrowser({ projects }: { projects: any[] }) {
   return (
@@ -21,9 +21,9 @@ export function ProjectsBrowser({ projects }: { projects: any[] }) {
           </motion.div>
         </Container>
       ) : (
-        <div className="w-full mt-10">
-          <ProjectStack projects={projects} />
-        </div>
+        <Container size="wide" className="pt-10">
+          <TypographicList projects={projects} />
+        </Container>
       )}
     </Section>
   );

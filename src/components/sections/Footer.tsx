@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { Text } from "@/components/ui/Text";
-import { InteractiveCore } from "@/components/motion/InteractiveCore";
+import { PhysicsStrings } from "@/components/motion/PhysicsStrings";
 
 type FooterProps = {
   name?: string;
@@ -19,17 +19,14 @@ export function Footer({ name = "Abdur Raheem", social = [] }: FooterProps) {
         </h1>
       </div>
 
-      <Container size="wide" className="relative z-10">
+      <Container size="wide" className="relative z-10 flex flex-col h-full justify-between pb-10">
         
         {/* Interactive God Mode Element */}
-        <div className="w-full border-b border-ink-700/40 pb-20 mb-16 flex flex-col items-center justify-center">
-          <InteractiveCore />
-          <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.4em] text-paper/30">
-            System Online. Awaiting input.
-          </p>
+        <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none">
+          <PhysicsStrings stringCount={24} />
         </div>
 
-        <div className="grid grid-cols-12 gap-y-12 md:gap-x-12">
+        <div className="relative z-10 grid grid-cols-12 gap-y-12 md:gap-x-12 mt-32">
           <div className="col-span-12 md:col-span-8">
             <Link
               href="/"
@@ -40,8 +37,8 @@ export function Footer({ name = "Abdur Raheem", social = [] }: FooterProps) {
             <Text variant="body" className="mt-6 max-w-md text-paper/55">
               Full-stack engineer based in Chennai. Currently open to remote work and relocation.
             </Text>
-            <a href="mailto:hello@example.com" className="inline-block mt-8 border border-paper/20 rounded-full px-6 py-3 font-mono text-xs uppercase tracking-widest hover:bg-paper hover:text-ink-950 transition-colors">
-              hello@example.com
+            <a href="mailto:abdurraheem000nyx@gmail.com" className="inline-block mt-8 border border-paper/20 rounded-full px-6 py-3 font-mono text-xs uppercase tracking-widest hover:bg-paper hover:text-ink-950 transition-colors">
+              abdurraheem000nyx@gmail.com
             </a>
           </div>
 
