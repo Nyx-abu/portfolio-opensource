@@ -13,6 +13,9 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
+    const isMobile = window.innerWidth <= 768 || window.matchMedia("(pointer: coarse)").matches;
+    if (isMobile) return;
+
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -55,7 +58,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
             attempts++;
             setTimeout(checkAndScroll, 100);
           }
-        } catch (_e) {
+        } catch {
           // Ignore invalid selectors
         }
       };
@@ -71,6 +74,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   // Intercept anchor clicks on the same page for smooth scrolling
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
+      if (!lenisRef.current) return;
       const target = (e.target as HTMLElement).closest('a');
       if (target && target.href && target.href.includes('#')) {
         const url = new URL(target.href);

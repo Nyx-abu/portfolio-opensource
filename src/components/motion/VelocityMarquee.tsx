@@ -13,6 +13,8 @@ import {
 } from "framer-motion";
 import { cn } from "@/lib/cn";
 
+import { useIsMobile } from "@/hooks/useIsMobile";
+
 interface VelocityMarqueeProps {
   text: string;
   baseVelocity?: number;
@@ -20,16 +22,17 @@ interface VelocityMarqueeProps {
 }
 
 export function VelocityMarquee({ text, baseVelocity = 5, className }: VelocityMarqueeProps) {
+  const isMobile = useIsMobile();
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, {
-    damping: 50,
-    stiffness: 400
+    damping: 80,
+    stiffness: 200
   });
   
   const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 2], {
-    clamp: false
+    clamp: true
   });
 
   // We render 8 spans, each taking 12.5% of the total width.
@@ -41,14 +44,20 @@ export function VelocityMarquee({ text, baseVelocity = 5, className }: VelocityM
   useAnimationFrame((t, delta) => {
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
-    // Change direction if scrolling backwards/forwards
-    if (velocityFactor.get() < 0) {
-      directionFactor.current = -1;
-    } else if (velocityFactor.get() > 0) {
-      directionFactor.current = 1;
+    if (isMobile) {
+      baseX.set(baseX.get() + moveBy);
+      return;
     }
 
-    moveBy += directionFactor.current * moveBy * velocityFactor.get();
+    // Change direction only with meaningful velocity to avoid direction flicker
+    const currentVelocity = velocityFactor.get();
+    if (currentVelocity > 0.5) {
+      directionFactor.current = 1;
+    } else if (currentVelocity < -0.5) {
+      directionFactor.current = -1;
+    }
+
+    moveBy += directionFactor.current * moveBy * currentVelocity;
     baseX.set(baseX.get() + moveBy);
   });
 

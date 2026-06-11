@@ -9,27 +9,30 @@ import { HeroGraphic } from "@/components/motion/HeroGraphic";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { duration, ease } from "@/lib/motion";
 
+import { useIsMobile } from "@/hooks/useIsMobile";
+
 export function Hero() {
   const ref = useRef<HTMLDivElement | null>(null);
   const reduced = useReducedMotion();
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 80]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, isMobile ? 1 : 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, (reduced || isMobile) ? 0 : 80]);
 
   return (
     <section
       ref={ref}
-      className="relative flex min-h-dvh items-end overflow-hidden bg-ink-950 pb-16 pt-24 md:pb-28 md:pt-32"
+      className="relative flex min-h-[85vh] items-center md:min-h-dvh md:items-end overflow-hidden bg-ink-950 pb-12 pt-20 md:pb-28 md:pt-32"
     >
       <HeroGraphic />
       <Container size="wide" className="relative z-10">
-        <motion.div style={{ opacity, y }} className="grid grid-cols-12 items-end gap-x-6 gap-y-12">
+        <motion.div style={{ opacity, y }} className="grid grid-cols-12 items-end gap-x-6 gap-y-8 md:gap-y-12">
           <div className="col-span-12 md:col-span-8">
             <motion.div
               initial={reduced ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: duration.normal, ease: ease.outExpo, delay: 0.1 }}
-              className="mb-8 flex items-center gap-3"
+              className="mb-4 md:mb-8 flex items-center gap-3"
             >
               <span className="h-px w-10 bg-paper/40" />
               <Text variant="body-sm" className="font-mono uppercase tracking-[0.15em] text-paper/70">
@@ -40,7 +43,7 @@ export function Hero() {
             <RevealText
               as="h1"
               text="Shipping full-stack products"
-              className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-display leading-[0.95] tracking-tight text-paper"
+              className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-display leading-[1.05] sm:leading-[0.95] tracking-tight text-paper"
               stagger={0.06}
               delay={0.15}
             />
@@ -48,7 +51,7 @@ export function Hero() {
             <RevealText
               as="p"
               text="from hello world to live traffic."
-              className="mt-4 text-xl sm:text-2xl md:text-3xl font-sans font-light leading-tight tracking-tight text-paper/60"
+              className="mt-4 text-xl sm:text-2xl md:text-3xl font-sans font-light leading-[1.2] sm:leading-tight tracking-tight text-paper/60"
               stagger={0.05}
               delay={0.55}
             />
@@ -92,7 +95,7 @@ export function Hero() {
 function ScrollIndicator() {
   return (
     <motion.div
-      className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2"
+      className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 hidden md:block"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 1.6, ease: ease.outExpo }}

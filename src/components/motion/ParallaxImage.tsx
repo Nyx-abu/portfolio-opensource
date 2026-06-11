@@ -2,17 +2,21 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import { cn } from "@/lib/cn";
+
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export function ParallaxImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
+  const y = useTransform(scrollYProgress, [0, 1], isMobile ? ["0%", "0%"] : ["-4%", "4%"]);
 
   return (
     <div 
@@ -27,12 +31,15 @@ export function ParallaxImage({ src, alt, className }: { src: string; alt: strin
       
       <motion.div 
         style={{ y }} 
-        className="relative w-full h-full flex items-center justify-center"
+        className="relative w-full h-[50vh] md:h-[80vh] flex items-center justify-center overflow-hidden rounded-lg shadow-[0_0_40px_rgba(0,0,0,0.5)]"
       >
-        <img 
+        <Image 
           src={src} 
           alt={alt} 
-          className="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-transform duration-700 group-hover:scale-[1.01]" 
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+          priority
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.01]" 
         />
       </motion.div>
     </div>

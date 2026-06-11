@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { TypographicList } from "@/components/motion/TypographicList";
+import { type ProjectCardData } from "@/components/sections/ProjectCard";
 
-export function ProjectsBrowser({ projects }: { projects: any[] }) {
+export function ProjectsBrowser({ projects }: { projects: Omit<ProjectCardData, "index">[] }) {
   return (
     <Section spacing="none" className="relative z-10 w-full pb-20">
       {projects.length === 0 ? (

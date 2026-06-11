@@ -2,6 +2,7 @@
 
 import { FadeIn } from "@/components/motion/FadeIn";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import Image from "next/image";
 
 export function PersonnelID() {
   const x = useMotionValue(0);
@@ -33,7 +34,7 @@ export function PersonnelID() {
   return (
     <FadeIn className="w-full relative" style={{ perspective: 1000 }}>
       <motion.div 
-        className="relative group w-full mx-auto lg:mx-0"
+        className="relative group w-full max-w-sm mx-auto lg:mx-0"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
@@ -51,11 +52,13 @@ export function PersonnelID() {
 
           {/* Inner Image Container */}
           <div className="relative aspect-square overflow-hidden rounded-lg bg-ink-950">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
+            <Image 
               src="/images/profile.png" 
               alt="Profile ID" 
-              className="absolute inset-0 w-full h-full object-cover object-center grayscale contrast-125 transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+              fill
+              sizes="(max-width: 768px) 100vw, 384px"
+              priority
+              className="object-cover object-center grayscale contrast-125 transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
             />
 
             {/* Top Right Status */}

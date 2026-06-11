@@ -26,11 +26,11 @@ export function Footer({ name = "Abdur Raheem", social = [] }: FooterProps) {
           <PhysicsStrings stringCount={24} />
         </div>
 
-        <div className="relative z-10 grid grid-cols-12 gap-y-12 md:gap-x-12 mt-32">
+        <div className="relative z-10 grid grid-cols-12 gap-y-10 md:gap-y-12 md:gap-x-12 mt-12 md:mt-32">
           <div className="col-span-12 md:col-span-8">
             <Link
               href="/"
-              className="block font-display text-5xl md:text-7xl leading-[0.9] tracking-tight text-paper/95 hover:text-white transition-colors"
+              className="block font-display text-3xl sm:text-5xl md:text-7xl leading-[0.9] tracking-tight text-paper/95 hover:text-white transition-colors"
             >
               Initiate Contact.
             </Link>
@@ -70,7 +70,7 @@ export function Footer({ name = "Abdur Raheem", social = [] }: FooterProps) {
           </div>
         </div>
 
-        <div className="mt-24 border-t border-ink-700/40 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-12 md:mt-24 border-t border-ink-700/40 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <Text variant="caption" className="text-paper/30">
             © {new Date().getFullYear()} {name}. All rights reserved.
           </Text>

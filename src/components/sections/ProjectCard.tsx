@@ -39,15 +39,17 @@ export function ProjectCard({ project, span = "half" }: { project: ProjectCardDa
   return (
     <motion.article
       className={cn(
-        "group relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-xl border border-ink-700/50 bg-ink-900/20 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:border-paper/20 hover:bg-ink-900/40 hover:shadow-[0_8px_30px_rgba(255,255,255,0.04)]",
+        "group relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-xl border border-ink-700/50 bg-ink-900/20 backdrop-blur-md transition-colors transition-shadow duration-500 hover:border-paper/20 hover:bg-ink-900/40 hover:shadow-[0_8px_30px_rgba(255,255,255,0.04)]",
+        !reduced && "opacity-0 translate-y-8",
         spanClass
       )}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      initial={reduced ? false : { opacity: 0, y: 30 }}
+      whileHover={{ y: -4 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-      transition={{ duration: duration.slow, ease: ease.outExpo, delay: project.index * 0.08 }}
+      viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+      transition={{ duration: duration.slow, ease: ease.outExpo, delay: project.index * 0.06 }}
     >
       <Link
         href={`/projects/${project.slug}`}
@@ -101,7 +103,7 @@ export function ProjectCard({ project, span = "half" }: { project: ProjectCardDa
           <Text variant="h3" className="text-xl text-paper transition-colors group-hover:text-white">
             {project.title}
           </Text>
-          <Text variant="body" className="mt-3 line-clamp-3 text-paper/50 transition-colors group-hover:text-paper/70 text-justify">
+          <Text variant="body" className="mt-3 line-clamp-3 text-paper/50 transition-colors group-hover:text-paper/70">
             {project.description}
           </Text>
         </div>

@@ -1,22 +1,26 @@
 "use client";
 
 import { motion, useMotionValue } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 export function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const hasFinePointer = useRef(false);
   const pathname = usePathname();
 
   // Exact cursor position
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Manage native cursor hiding based on route
+  // Manage native cursor hiding based on route AND pointer type
   useEffect(() => {
     const isAdmin = pathname?.startsWith('/admin');
-    if (isAdmin) {
+    const isFine = window.matchMedia("(pointer: fine)").matches;
+    hasFinePointer.current = isFine;
+
+    if (isAdmin || !isFine) {
       document.documentElement.classList.remove('hide-native-cursor');
     } else {
       document.documentElement.classList.add('hide-native-cursor');
@@ -28,7 +32,7 @@ export function CustomCursor() {
 
   useEffect(() => {
     // Only show on devices with a fine pointer (mouse)
-    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
 
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
@@ -61,8 +65,8 @@ export function CustomCursor() {
     };
   }, [cursorX, cursorY, isVisible]);
 
-  // Hide the custom cursor in the admin panel since we have the native cursor
-  if (!isVisible || pathname?.startsWith('/admin')) return null;
+  // Hide the custom cursor in the admin panel or on touch devices
+  if (!isVisible || pathname?.startsWith('/admin') || !hasFinePointer.current) return null;
 
   return (
     <motion.div

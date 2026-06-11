@@ -13,7 +13,7 @@ export const HeroGraphic = memo(function HeroGraphic() {
   return (
     <motion.div 
       style={{ scale, y, opacity }}
-      className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none z-0"
+      className="absolute inset-0 hidden md:flex items-center justify-center overflow-hidden pointer-events-none z-0"
     >
       {/* Container sized to cover the whole screen and then some */}
       <div className="relative w-[250vw] sm:w-[180vw] lg:w-[140vw] max-w-[2000px] aspect-square mix-blend-screen">

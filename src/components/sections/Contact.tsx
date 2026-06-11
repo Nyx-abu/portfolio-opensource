@@ -23,25 +23,25 @@ export function Contact({ email = "hello@example.com", social = [] }: ContactPro
           <RevealText
             as="h2"
             text="Have something worth"
-            className="text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
+            className="text-3xl sm:text-5xl lg:text-7xl font-display leading-[1.05] sm:leading-[0.85] tracking-[-0.02em] text-paper"
             stagger={0.05}
           />
           <RevealText
             as="h2"
             text="building together?"
-            className="text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper/55"
+            className="text-3xl sm:text-5xl lg:text-7xl font-display leading-[1.05] sm:leading-[0.85] tracking-[-0.02em] text-paper/55"
             stagger={0.05}
             delay={0.25}
           />
         </div>
 
         <FadeIn delay={0.4}>
-          <div className="mt-14 grid grid-cols-12 gap-y-10 md:gap-x-12">
+          <div className="mt-10 md:mt-14 grid grid-cols-12 gap-y-8 md:gap-y-10 md:gap-x-12">
             <div className="col-span-12 md:col-span-7">
               <a
                 href={`mailto:${email}`}
                 onClick={() => track({ type: "contact_click" })}
-                className="group inline-flex max-w-full items-baseline gap-3 font-display text-xl sm:text-h3 md:text-display-sm tracking-tight text-paper transition-all hover:bg-gradient-to-r hover:from-accent-400 hover:to-emerald-400 hover:bg-clip-text hover:text-transparent"
+                className="group inline-flex max-w-full flex-wrap items-baseline gap-3 font-display text-xl sm:text-h3 md:text-display-sm tracking-tight text-paper transition-all hover:bg-gradient-to-r hover:from-accent-400 hover:to-emerald-400 hover:bg-clip-text hover:text-transparent"
               >
                 <span className="break-all border-b border-ink-700/60 pb-1 transition-colors group-hover:border-accent-400">
                   {email}

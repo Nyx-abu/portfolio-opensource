@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { track } from "@/lib/analytics";
+import { type ProjectCardData } from "@/components/sections/ProjectCard";
 
-export function TypographicList({ projects }: { projects: any[] }) {
+export function TypographicList({ projects }: { projects: Omit<ProjectCardData, "index">[] }) {
   return (
     <div className="w-full flex flex-col pt-10 pb-[20vh] border-t border-ink-800">
       {projects.map((project, index) => (
@@ -14,12 +14,12 @@ export function TypographicList({ projects }: { projects: any[] }) {
   );
 }
 
-function TypographicRow({ project, index }: { project: any; index: number }) {
+function TypographicRow({ project, index }: { project: Omit<ProjectCardData, "index">; index: number }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
       onClick={() => track({ type: "project_click", projectId: project.id, projectTitle: project.title })}
-      className="group relative flex flex-col md:flex-row md:items-center justify-between py-12 md:py-16 border-b border-ink-800/50 hover:border-ink-500 transition-colors duration-500"
+      className="group relative flex flex-col md:flex-row md:items-center justify-between py-10 md:py-14 px-6 md:px-10 mb-4 rounded-2xl border border-ink-800/50 hover:border-ink-500 transition-colors duration-500 bg-ink-950/60 backdrop-blur-xl hover:bg-ink-900/80"
     >
       <div className="flex items-start gap-4 md:gap-12">
         <span className="font-mono text-xs md:text-sm text-paper/30 mt-2 md:mt-4">

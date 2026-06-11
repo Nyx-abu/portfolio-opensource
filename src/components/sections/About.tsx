@@ -15,7 +15,7 @@ export async function About() {
       <div className="absolute top-1/2 -translate-y-1/2 right-0 w-[60vw] max-w-[800px] aspect-square bg-accent-900/10 rounded-full blur-[120px] pointer-events-none" />
 
       <Container size="wide" className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-16 lg:gap-x-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-10 lg:gap-y-16 lg:gap-x-16 items-center">
           
           {/* LEFT: Cinematic Personnel ID */}
           <div className="lg:col-span-5 flex justify-center lg:justify-start">
@@ -35,7 +35,7 @@ export async function About() {
 
             <FadeIn delay={0.2}>
               <div className="mt-10 space-y-8">
-                <div className="prose-portfolio text-body-lg font-light leading-relaxed text-paper/75 text-justify">
+                <div className="prose-portfolio text-body-lg font-light leading-relaxed text-paper/75">
                   {about.body.split('\n').map((paragraph, index) => (
                     <p key={index} className="mb-4">{paragraph}</p>
                   ))}
@@ -43,7 +43,7 @@ export async function About() {
                 
                 <div className="p-6 border border-ink-800/50 bg-ink-900/20 rounded-xl relative overflow-hidden">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-500/20 via-accent-400/40 to-transparent" />
-                  <p className="text-body font-light leading-relaxed text-paper/60 text-justify">
+                  <p className="text-body font-light leading-relaxed text-paper/60">
                     My work blends quiet visual systems with infrastructure that takes itself
                     seriously — backed by years of shipping product across consumer, dev tooling
                     and AI surfaces.

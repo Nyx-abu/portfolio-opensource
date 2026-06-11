@@ -36,7 +36,7 @@ export async function Projects() {
             <RevealText
               as="h2"
               text="Things I've made"
-              className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
+              className="mt-4 text-3xl sm:text-5xl lg:text-7xl font-display leading-[1.05] sm:leading-[0.85] tracking-[-0.02em] text-paper"
               stagger={0.05}
             />
           </div>
@@ -51,7 +51,7 @@ export async function Projects() {
           </FadeIn>
         </div>
 
-        <div className="mt-16 grid grid-cols-12 gap-8 md:gap-12">
+        <div className="mt-10 md:mt-16 grid grid-cols-12 gap-6 md:gap-12">
           {projects.length === 0 ? (
             <FadeIn className="col-span-12">
               <div className="rounded-xl border border-dashed border-ink-700/60 p-12 text-center">

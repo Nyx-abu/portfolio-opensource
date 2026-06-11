@@ -15,7 +15,7 @@ export async function Experience() {
   return (
     <Section id="experience" spacing="vast" className="bg-ink-950">
       <Container size="wide">
-        <div className="grid grid-cols-12 gap-y-20 md:gap-x-12">
+        <div className="grid grid-cols-12 gap-y-12 md:gap-y-20 md:gap-x-12">
           <div className="col-span-12 md:col-span-4">
             <Text variant="caption" className="text-paper/40">
               03 — Experience
@@ -23,7 +23,7 @@ export async function Experience() {
             <RevealText
               as="h2"
               text="A few stops"
-              className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
+              className="mt-4 text-3xl sm:text-5xl lg:text-7xl font-display leading-[1.05] sm:leading-[0.85] tracking-[-0.02em] text-paper"
             />
             <FadeIn delay={0.2}>
               <p className="mt-6 max-w-sm text-body font-light text-paper/60">
@@ -50,17 +50,17 @@ export async function Experience() {
                 <ul className="flex flex-col gap-12 md:gap-16">
                   {exp.map((e, i) => (
                     <FadeIn key={e.id} as="li" delay={i * 0.1}>
-                      <div className="group relative pl-8 md:pl-12 transition-transform duration-700 ease-out hover:translate-x-2">
+                      <div className="group relative pl-8 md:pl-12 transition-transform duration-700 ease-out md:hover:translate-x-2">
                         {/* The Node on the timeline */}
                         <div className="absolute -left-[4.5px] top-1.5 h-2 w-2 rotate-45 border border-ink-600 bg-ink-950 transition-all duration-500 group-hover:scale-[2] group-hover:rotate-90 group-hover:border-accent-400 group-hover:bg-accent-500 group-hover:shadow-[0_0_20px_rgba(56,189,248,1)]" />
                         
                         {/* Connecting horizontal dash */}
-                        <div className="absolute left-0 top-[9px] h-px w-4 bg-ink-800/50 transition-all duration-700 group-hover:w-8 group-hover:bg-accent-500/50" />
+                        <div className="absolute left-0 top-[9px] h-px w-4 bg-ink-800/50 transition-all duration-700 md:group-hover:w-8 group-hover:bg-accent-500/50" />
 
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 items-baseline">
                           <div className="md:col-span-5 lg:col-span-4">
-                            <Text variant="caption" className="font-mono text-[10px] tracking-[0.2em] text-paper/30 transition-colors duration-500 group-hover:text-accent-400/80 uppercase whitespace-nowrap">
-                              [{formatDate(e.startDate)} {"//"} {e.current ? "PRESENT" : formatDate(e.endDate)}]
+                            <Text variant="caption" className="font-mono text-[10px] tracking-[0.2em] text-paper/30 transition-colors duration-500 group-hover:text-accent-400/80 uppercase whitespace-normal sm:whitespace-nowrap">
+                               [{formatDate(e.startDate)} {"//"} {e.current ? "PRESENT" : formatDate(e.endDate)}]
                             </Text>
                           </div>
                           
@@ -75,7 +75,7 @@ export async function Experience() {
                         </div>
                         
                         {/* Ambient Glow Background on Hover */}
-                        <div className="absolute inset-0 -z-10 -ml-12 bg-gradient-to-r from-accent-500/0 via-accent-500/5 to-transparent opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100" />
+                        <div className="absolute inset-0 -z-10 -ml-8 md:-ml-12 bg-gradient-to-r from-accent-500/0 via-accent-500/5 to-transparent opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100" />
                       </div>
                     </FadeIn>
                   ))}
@@ -85,7 +85,7 @@ export async function Experience() {
           </div>
         </div>
 
-        <div className="mt-32 w-full border-t border-ink-800/40 pt-16 md:pt-24 pb-10">
+        <div className="mt-16 md:mt-32 w-full border-t border-ink-800/40 pt-10 md:pt-16 md:pt-24 pb-10">
           <Container size="wide" className="mb-12">
             <div className="grid grid-cols-12 gap-y-12 md:gap-x-12">
               <div className="col-span-12 md:col-span-4">
@@ -95,7 +95,7 @@ export async function Experience() {
                 <RevealText
                   as="h3"
                   text="Stack"
-                  className="mt-4 text-5xl sm:text-6xl lg:text-7xl font-display leading-[0.85] tracking-[-0.02em] text-paper"
+                  className="mt-4 text-3xl sm:text-5xl lg:text-7xl font-display leading-[1.05] sm:leading-[0.85] tracking-[-0.02em] text-paper"
                 />
               </div>
             </div>
@@ -114,7 +114,7 @@ export async function Experience() {
                   key={group.category} 
                   text={textString} 
                   baseVelocity={baseVel} 
-                  className={`text-6xl md:text-8xl lg:text-[7vw] font-display uppercase tracking-tighter ${outlineClass}`}
+                  className={`text-4xl sm:text-6xl md:text-8xl lg:text-[7vw] font-display uppercase tracking-tighter ${outlineClass}`}
                 />
               );
             })}
